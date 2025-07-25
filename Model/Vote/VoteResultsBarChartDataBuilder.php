@@ -143,7 +143,7 @@ class VoteResultsBarChartDataBuilder extends BarChartDataBuilder
         uksort($array, function($a, $b) use ($array) {
             $partsA = explode('-', $a);
             $partsB = explode('-', $b);
-            // X (survey) ASC
+            // X (poll) ASC
             $xComparison = $partsA[1] <=> $partsB[1];
             if ($xComparison !== 0) {
                 return $xComparison;

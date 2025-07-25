@@ -33,8 +33,26 @@ FeaturePoll is a powerful Magento extension that helps you gather community feed
 - **Fraud Detection**: Admin can review and mark suspicious votes as fraudulent
 - **Guest Participation**: Secure voting for community members and guests
 
-![Security Features](docs/security.png)
-*[📸 Screenshot: OTP verification and security features]*
+![Security Features](docs/front1.png)
+*[📸 Screenshot: Voting]*
+
+![Security Features](docs/front2.png)
+*[📸 Screenshot: OTP form for verification]*
+
+![Security Features](docs/front3.png)
+*[📸 Screenshot: reCaptcha verification]*
+
+![Security Features](docs/front4.png)
+*[📸 Screenshot: OTP verification]*
+
+![Security Features](docs/front5.png)
+*[📸 Screenshot: Vote Success]*
+
+![Security Features](docs/front6.png)
+*[📸 Screenshot: Vote Success - GTM events]*
+
+![Security Features](docs/front7.png)
+*[📸 Screenshot: Vote Success - GTM events - voted]*
 
 ### 📊 Community Insights & Analytics
 - **Live Results**: Real-time percentage displays showing community preferences
@@ -43,7 +61,8 @@ FeaturePoll is a powerful Magento extension that helps you gather community feed
 - **Community Feedback**: Drill-down into individual responses and detailed suggestions
 - **User Tracking**: Find specific feedback by email or user segment
 
-![Analytics Dashboard](docs/analytics.png)
+![Analytics Dashboard](docs/analytics_dashboard.png)
+
 *[📸 Screenshot: Analytics dashboard with feature popularity charts]*
 
 ### 🎯 Community Experience
@@ -52,8 +71,22 @@ FeaturePoll is a powerful Magento extension that helps you gather community feed
 - **Transparent Results**: Show community sentiment in real-time
 - **Configurable Visibility**: Control when and how results are displayed
 
-![Mobile Interface](docs/mobile.png)
+![Mobile Interface](docs/mobile1.png)
+
 *[📸 Screenshot: Mobile interface and responsive design]*
+
+![Mobile Interface](docs/mobile2.png)
+
+*[📸 Screenshot: Mobile interface and responsive design]*
+
+![Mobile Interface](docs/mobile3.png)
+
+*[📸 Screenshot: Mobile interface and responsive design]*
+
+![Mobile Interface](docs/mobile4.png)
+
+*[📸 Screenshot: Mobile interface and responsive design]*
+
 
 # Installation Guide
 You can find the module on [Packagist](https://packagist.org/packages/jaroslawzielinski/featurepoll-m2). To install:
@@ -65,13 +98,21 @@ composer require jaroslawzielinski/featurepoll-m2
 ## 🛠️ Quick Setup Guide
 
 ### 1. Create Your First Feature Poll
-- Navigate to **Admin Panel > Grid Section > FeaturePoll**
-- Click **"Add New Poll"**
+- Navigate to **Admin Panel Menu > FEATUREPOLL > Grids > Features**
+- Click **"Add New Feature"**
 - Configure your feature options and questions
-- Set community engagement preferences
+- Hit Save Feature button
 
-![Poll Creation](docs/poll-creation.png)
-*[📸 Screenshot: Feature poll creation interface]*
+![Poll Creation](docs/newpoll1.png)
+*[📸 Screenshot: Feature creation interface]*
+
+- Navigate to **Admin Panel Menu > FEATUREPOLL > Grids > Polls**
+- Click **"Add New Poll"**
+- Configure your Poll -> Feature association (you may change order)
+- Hit Save Poll button
+
+![Poll Creation](docs/newpoll2.png)
+*[📸 Screenshot: Poll creation interface]*
 
 ### 2. Configure Community Engagement
 - Choose target pages for poll display
@@ -83,8 +124,14 @@ composer require jaroslawzielinski/featurepoll-m2
 - Monitor real-time community sentiment
 - Make data-driven development decisions
 
-![Results Monitoring](docs/results.png)
+![Results Monitoring](docs/results_realtime1.png)
 *[📸 Screenshot: Real-time community sentiment monitoring]*
+
+![Results Monitoring](docs/results_realtime2.png)
+*[📸 Screenshot: Real-time community sentiment monitoring - after clicking View Full details]*
+
+![Results Monitoring](docs/results_realtime3.png)
+*[📸 Screenshot: Real-time community sentiment monitoring - you as admin user may select some of votes as Fraud (exlude them in Results)]*
 
 ## 🔧 Configuration Options
 
@@ -108,19 +155,6 @@ composer require jaroslawzielinski/featurepoll-m2
 
 This project depends on:
 - **[OTPComponent-M2](https://github.com/JaroslawZielinski/OTPComponent-M2)** - Secure OTP verification system (also by the same author)
-
-## 📸 Screenshots Gallery
-
-- `docs/banner.png` - Main interface banner
-- `docs/admin-panel.png` - Admin poll management
-- `docs/poll-creation.png` - Feature poll creation interface  
-- `docs/security.png` - Security and OTP features
-- `docs/analytics.png` - Community sentiment dashboard
-- `docs/results.png` - Real-time results display
-- `docs/mobile.png` - Mobile responsive design
-- `docs/fraud-detection.png` - Fraud detection tools
-
-*[📸 Add your docs in the `/docs` folder]*
 
 ## 🤝 Support & Contribution
 

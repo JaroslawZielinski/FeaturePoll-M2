@@ -68,7 +68,7 @@ class Edit extends Grid implements HttpGetActionInterface
      */
     protected function getTitle(): string
     {
-        return (string)__('Edit Survey');
+        return (string)__('Edit Poll');
     }
 
     /**
@@ -76,6 +76,6 @@ class Edit extends Grid implements HttpGetActionInterface
      */
     protected function _isAllowed(): bool
     {
-        return $this->_authorization->isAllowed('JaroslawZielinski_MySurvey::surveys');
+        return $this->_authorization->isAllowed('JaroslawZielinski_FeaturePoll::polls');
     }
 }

@@ -233,7 +233,7 @@ class VoteManagement
             $maxVote = count($featurePollArray[$pollId]);
             if ($realVoteCount >= $maxVote) {
                 throw new LocalizedException(
-                    __('Vote limit is exhausted. You cannot vote anymore during the survey within this form.')
+                    __('Vote limit is exhausted. You cannot vote anymore during the poll within this feature.')
                 );
             }
             if (!$suppressTimeBan) {
@@ -249,15 +249,15 @@ class VoteManagement
                     }
                 }
             }
-            // 5. Check if form is Ok
-            $formIdsNotAllowed = [];
+            // 5. Check if feature is Ok
+            $featureIdsNotAllowed = [];
             /** @var \JaroslawZielinski\FeaturePoll\Model\Data\Vote $voteItem */
             foreach($voteItems as $voteItem) {
-                $formIdsNotAllowed[] = (int)$voteItem->getFeatureId();
+                $featureIdsNotAllowed[] = (int)$voteItem->getFeatureId();
             }
-            if (in_array($featureId, $formIdsNotAllowed)) {
+            if (in_array($featureId, $featureIdsNotAllowed)) {
                 throw new LocalizedException(
-                    __('You have already voted for a feature in this form.')
+                    __('You have already voted for the feature in this form.')
                 );
             }
         } else {

@@ -1,0 +1,22 @@
+<?php
+    /** @var \JaroslawZielinski\FeaturePoll\Block\Adminhtml\Analytics\Legend $block */
+    $pollResults = $block->getPollResults();
+    $keys = $block->getSortedKeys();
+?>
+<?php if (!empty($keys)): ?>
+    <h2><?= __('Legend:'); ?></h2>
+    <table>
+    <?php foreach ($keys as $i => $key): ?>
+        <?php
+            list ($pollId, $featureId, $questionId) = \JaroslawZielinski\FeaturePoll\Helper\Data::explodeFeaturePollId($key);
+            $descriptions = $block->getDescriptions($pollId);
+            $description = $descriptions[$pollId][$featureId][$questionId];
+        ?>
+        <tr>
+            <td><strong style="margin-right: 10px"><?= $key; ?></strong></td>
+            <td><?= $description; ?> (<strong><?= $pollResults[$key]['value']; ?></strong>)</td>
+        </tr>
+    <?php endforeach; ?>
+    </table>
+<?php endif; ?>
+<br/>

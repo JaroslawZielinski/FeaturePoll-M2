@@ -1,0 +1,187 @@
+<?php
+    /** @var \JaroslawZielinski\FeaturePoll\Block\Poll\Panel\Content\Feature $block */
+    $tab = $block->getTab();
+    $questions = $tab['questions'];
+    $pollId = $block->getPollId();
+    /** @var \JaroslawZielinski\FeaturePoll\ViewModel\Content $viewModel */
+    $viewModel = $block->getViewModel();
+    $htmlId = $viewModel->getPaneHtmlId();
+?>
+<form id="ms-form-<?= $tab['featureId']; ?>" method="POST" action="#" enctype="multipart/form-data" novalidate>
+    <div class="container" style="width: 100%;">
+        <div class="row">
+            <div class="col-24 col-sm-24">
+                <input name="form_key" type="hidden" value="<?= $block->getFormKey(); ?>">
+            </div>
+        </div>
+        <?php
+            $i = 0;
+        ?>
+        <?php foreach ($questions as $question): ?>
+        <?php
+            $featureHtmlId = \JaroslawZielinski\FeaturePoll\Helper\Data::implodeFeaturePollId($pollId, $tab['featureId'], $question['position']);
+        ?>
+        <div class="row">
+            <div class="col-24 col-sm-24">
+                <label for="<?= $featureHtmlId; ?>">
+                    <input
+                        type="radio"
+                        id="<?= $featureHtmlId; ?>"
+                        name="vote" value="<?= $featureHtmlId; ?>"
+                        <?php if (0 === $i):?>checked="checked"<?php endif;?>
+                    />
+                    <?= sprintf('%s - %s', $question['question'], $question['description']); ?>
+                    <?php if (\JaroslawZielinski\FeaturePoll\Model\Source\Type::TYPE_OPEN === (int)$question['type']): ?>
+                        <textarea name="vote_<?= $featureHtmlId; ?>" class="input-text extended-information"
+                            placeholder="<?= __('Write details'); ?>" rows="1"></textarea>
+                    <?php endif; ?>
+                </label>
+                <?php
+                    list ($value, $total) = $viewModel->getResults((int)$pollId, (int)$tab['featureId'], (int)$question['position']);
+                    /** @var \JaroslawZielinski\FeaturePoll\Block\Poll\Panel\Content\Feature\Results $mSProgressBlock */
+                    $mSProgressBlock = $block->getChildBlock('ms-progress');
+                    $resultHtmlId = sprintf('results-%s', $featureHtmlId);
+                ?>
+                <?php if (!empty($mSProgressBlock) && $total > 0): ?>
+                    <?php
+                        $progressPercents = \JaroslawZielinski\FeaturePoll\Helper\Data::getProgressPercents((int)$value, (int)$total);
+                        $backgroundColorClass = \JaroslawZielinski\FeaturePoll\Helper\Data::getPercentageColorClass($progressPercents);
+                    ?>
+                    <div id="<?= $resultHtmlId; ?>" class="results-container <?= $backgroundColorClass; ?>">
+                        <?= $mSProgressBlock
+                            ->setValue($value)
+                            ->setTotal($total)
+                            ->toHtml();
+                        ?>
+                    </div>
+                <?php endif; ?>
+
+            </div>
+        </div>
+        <?php $i++; ?>
+        <?php endforeach;?>
+        <?php if (!empty($questions)): ?>
+        <div class="row submit-form">
+            <div class="col-24 col-sm-24">
+                <button class="button-vote" type="submit" name="save"><?= __('Vote'); ?></button>
+            </div>
+        </div>
+        <?php endif; ?>
+    </div>
+</form>
+<?php if (!empty($questions)): ?>
+<script type="text/x-magento-init">
+    {
+        "#ms-form-<?= $tab['featureId']; ?>": {
+            "validation": {},
+            "featurePollValidateMethod":{}
+        }
+    }
+</script>
+
+<script>
+    require([
+        'jquery',
+        'mage/translate',
+        'yireoGoogleTagManagerPush',
+        'mage/validation'
+    ], function ($, $t, pusher) {
+        let dataForm = $('#ms-form-<?= $tab['featureId']; ?>');
+        $(dataForm).on('submit', function(event) {
+            event.preventDefault();
+            let validation = dataForm.validation('isValid');
+            if (validation) {
+                const form = document.forms.namedItem('ms-form-<?= $tab['featureId']; ?>');
+                const oData = new FormData(form);
+                const formKey = oData.get('form_key');
+                const featurePollId = oData.get('vote');
+                const featurePollValue = oData.get('vote_' + featurePollId);
+                const splits = featurePollId.replaceAll('featurepoll-', '').split('-');
+                const pollId = splits[0], featureId = splits[1], questionId = splits[2];
+                const description = featuresJson[pollId][featureId][questionId] +
+                    (null !== featurePollValue ? ' [' + featurePollValue + ']' : '');
+                const submitUrl = '<?= ($viewModel->isCustomerLogged() ?
+                    '/featurepoll/voting/voteNonGuest' : '/featurepoll/voting/reset'); ?>';
+                let eventData = {};
+                $.ajax({
+                    showLoader: false,
+                    url: submitUrl,
+                    data: {
+                        form_key: formKey,
+                        featurepoll_id: featurePollId,
+                        featurepoll_value: featurePollValue
+                    },
+                    type: 'POST',
+                    dataType: 'json'
+                }).done(function (data) {
+                    if ('OK' === data['status']) {
+                        $('#body-container').html(data['results']);
+                        $('#body-container-header').html(description);
+                        $('#<?= $htmlId; ?>').toggleClass('show');
+                        $('#my-voting-form').trigger('click');
+                        const resultsArray = data['results2'];
+                        for (const key in resultsArray) {
+                            const value = resultsArray[key];
+                            $('#results-' + key).html(value);
+                        }
+                        <?php if (!empty($viewModel->getGTMEventsName1())): ?>
+                        //Fire first event
+                        eventData = {
+                            'event': '<?= $viewModel->getGTMEventsName1(); ?>',
+                            'ecommerce': {
+                                'featurepoll_id': featurePollId,
+                                'featurepoll_value': featurePollValue,
+                                'description': description
+                            }
+                        };
+                        pusher(eventData, 'push name1 event (user clicks vote button) [featurepoll_id, featurepoll_value, description]');
+                        <?php endif; ?>
+                        <?php if ($viewModel->isCustomerLogged()): ?>
+                            const eCommerce = data['ecommerce'];
+                            <?php if (!empty($viewModel->getGTMEventsName3())): ?>
+                            //Fire third event
+                            eventData = {
+                                'event': '<?= $viewModel->getGTMEventsName3(); ?>',
+                                'ecommerce': {
+                                    'name': eCommerce.name,
+                                    'surname': eCommerce.surname,
+                                    'customerId': eCommerce.customerId,
+                                    'featurepoll_id': featurePollId,
+                                    'featurepoll_value': featurePollValue,
+                                    'description': description
+                                }
+                            };
+                            pusher(eventData, 'push name1 event (user clicks vote button) [featurepoll_id, featurepoll_value, description]');
+                            <?php endif; ?>
+                        <?php endif; ?>
+                    } else {
+                        <?php if ($viewModel->isCustomerLogged()): ?>
+                            const eCommerce = data['ecommerce'];
+                            <?php if (!empty($viewModel->getGTMEventsName4())): ?>
+                            //Fire fourth event
+                            eventData = {
+                                'event': '<?= $viewModel->getGTMEventsName4(); ?>',
+                                'ecommerce': {
+                                    'name': eCommerce.name,
+                                    'surname': eCommerce.surname,
+                                    'customerId': eCommerce.customerId,
+                                    'featurepoll_id': featurePollId,
+                                    'featurepoll_value': featurePollValue,
+                                    'description': description,
+                                    'reasonFailed': data['message']
+                                }
+                            };
+                            pusher(eventData, 'push name1 event (user clicks vote button) [featurepoll_id, featurepoll_value, description]');
+                            <?php endif; ?>
+                        <?php endif; ?>
+                        $('#body-container').html(data['results']);
+                        $('#body-container-header').html(description);
+                        $('#<?= $htmlId; ?>').toggleClass('show');
+                        $('#my-voting-form').trigger('click');
+                    }
+                });
+            }
+        });
+    });
+</script>
+<?php endif; ?>

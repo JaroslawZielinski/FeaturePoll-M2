@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="JaroslawZielinski_FeaturePoll::menu" resource="JaroslawZielinski_FeaturePoll::menu" title="featurePoll"
+            module="JaroslawZielinski_FeaturePoll" sortOrder="10"/>
+
+        <add id="JaroslawZielinski_FeaturePoll::grids" resource="JaroslawZielinski_FeaturePoll::grids" title="Grids"
+            translate="title" module="JaroslawZielinski_FeaturePoll" parent="JaroslawZielinski_FeaturePoll::menu"
+            sortOrder="10"/>
+
+        <add id="JaroslawZielinski_FeaturePoll::features" resource="JaroslawZielinski_FeaturePoll::features"
+            title="Features" action="featurepoll/features/index" module="JaroslawZielinski_FeaturePoll" sortOrder="30"
+            parent="JaroslawZielinski_FeaturePoll::grids" dependsOnModule="JaroslawZielinski_FeaturePoll"/>
+
+        <add id="JaroslawZielinski_FeaturePoll::polls" resource="JaroslawZielinski_FeaturePoll::polls" title="Polls"
+            action="featurepoll/polls/index" module="JaroslawZielinski_FeaturePoll" sortOrder="40"
+            parent="JaroslawZielinski_FeaturePoll::grids" dependsOnModule="JaroslawZielinski_FeaturePoll"/>
+
+        <add id="JaroslawZielinski_FeaturePoll::voters" resource="JaroslawZielinski_FeaturePoll::voters" title="Voters"
+            action="featurepoll/voters/index" module="JaroslawZielinski_FeaturePoll" sortOrder="50"
+            parent="JaroslawZielinski_FeaturePoll::grids" dependsOnModule="JaroslawZielinski_FeaturePoll"/>
+
+        <add id="JaroslawZielinski_FeaturePoll::reports" resource="JaroslawZielinski_FeaturePoll::reports"
+            title="Reports" translate="title" module="JaroslawZielinski_FeaturePoll"
+            parent="JaroslawZielinski_FeaturePoll::menu" sortOrder="20"/>
+
+        <add id="JaroslawZielinski_FeaturePoll::votes" resource="JaroslawZielinski_FeaturePoll::votes" title="Votes"
+            action="featurepoll/votes/index" module="JaroslawZielinski_FeaturePoll" sortOrder="10"
+            parent="JaroslawZielinski_FeaturePoll::reports" dependsOnModule="JaroslawZielinski_FeaturePoll"/>
+
+        <add id="JaroslawZielinski_FeaturePoll::settings"  resource="JaroslawZielinski_FeaturePoll::settings"
+            title="Settings" translate="title" module="JaroslawZielinski_FeaturePoll"
+            parent="JaroslawZielinski_FeaturePoll::menu" sortOrder="30"/>
+
+        <add id="JaroslawZielinski_FeaturePoll::configuration" resource="JaroslawZielinski_FeaturePoll::configuration"
+            title="Configuration" action="adminhtml/system_config/edit/section/jaroslawzielinski_featurepoll"
+            module="JaroslawZielinski_FeaturePoll" sortOrder="10" parent="JaroslawZielinski_FeaturePoll::settings"
+            dependsOnModule="JaroslawZielinski_FeaturePoll"/>
+    </menu>
+</config>

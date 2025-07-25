@@ -1,0 +1,51 @@
+<?php
+    /** @var \Magento\Framework\View\Element\Template $block */
+    $title = (string)__('Vote for...');
+    $htmlId = 'my-popup';
+?>
+
+<div id="<?= $htmlId; ?>-wrapper" class="vote-modal-wrapper">
+    <div id="<?= $htmlId; ?>">
+        <div class="header">
+            <div id="<?= $block->getHtmlId(); ?>-header"></div>
+        </div>
+        <div class="body ">
+            <div id="<?= $block->getHtmlId(); ?>" class="container"></div>
+        </div>
+    </div>
+    <script>
+        require([
+            'jquery',
+            'mage/translate',
+            'Magento_Ui/js/modal/modal',
+            'otpForms'
+        ],
+        function ($, $t, modal, otpForms) {
+            var options = {
+                'type': 'popup',
+                'title': '<?= $title; ?>',
+                'trigger': '[data-trigger=vote-form]',
+                'responsive': true,
+                'modalClass': 'vote-form-popup',
+                'buttons': [{
+                    text: $t('Ok'),
+                    class: 'hidden'
+                }],
+                opened: function() {
+                    // Called when modal opens
+                    $('#mobile-trigger').hide();
+                },
+                closed: function (element, modal) {
+                    let htmlId = '#modal-content-' + modal.uuid + ' form';
+                    let form = $(htmlId);
+                    if (form.length > 0) {
+                        let formId = form.attr('id');
+                        otpForms.resetFormById(formId);
+                    }
+                    $('#mobile-trigger').show();
+                }
+            };
+            const popup = modal(options, $('#<?= $htmlId; ?>-wrapper'));
+        });
+    </script>
+</div>

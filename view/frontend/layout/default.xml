@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column"
+    xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="JaroslawZielinski_FeaturePoll::css/poll/panel.css"/>
+
+        <css src="JaroslawZielinski_FeaturePoll::css/poll/voting.css"/>
+    </head>
+
+    <body>
+        <referenceContainer name="before.body.end">
+            <block class="JaroslawZielinski\FeaturePoll\Block\Poll\Panel" name="ms-panel" as="ms-panel"
+                ifconfig="jaroslawzielinski_featurepoll/general/enable" after="-">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">JaroslawZielinski\FeaturePoll\ViewModel\Content</argument>
+                </arguments>
+
+                <block class="JaroslawZielinski\FeaturePoll\Block\Poll\Panel\Content" name="ms-content"
+                    as="ms-content">
+                    <block class="JaroslawZielinski\FeaturePoll\Block\Poll\Panel\Content\Feature" name="ms-feature"
+                        as="ms-feature">
+                        <arguments>
+                            <argument name="view_model" xsi:type="object">JaroslawZielinski\FeaturePoll\ViewModel\Content</argument>
+                        </arguments>
+
+                        <block class="JaroslawZielinski\FeaturePoll\Block\Poll\Panel\Content\Feature\Results"
+                            ifconfig="jaroslawzielinski_featurepoll/general/results_enabled" name="ms-progress"
+                            as="ms-progress"/>
+                    </block>
+
+                    <block name="voting-form-popup" as="voting-form-popup"
+                        template="JaroslawZielinski_FeaturePoll::widget/feature/popup.phtml">
+                        <arguments>
+                            <argument name="html_id" xsi:type="string">body-container</argument>
+                        </arguments>
+                    </block>
+
+                    <block name="rules_and_regulations-popup" as="rules_and_regulations-popup"
+                        template="JaroslawZielinski_FeaturePoll::widget/feature/rr_popup.phtml">
+                        <arguments>
+                            <argument name="html_id" xsi:type="string">rules-and-regulations</argument>
+
+                            <argument name="view_model" xsi:type="object">JaroslawZielinski\FeaturePoll\ViewModel\RulesAndRegulations</argument>
+                        </arguments>
+                    </block>
+                </block>
+            </block>
+
+            <block class="Magento\Framework\View\Element\Text" ifconfig="jaroslawzielinski_featurepoll/general/enable"
+                name="myVotingForm" as="myVotingForm">
+                <arguments>
+                    <argument name="text" xsi:type="string"><![CDATA[<span id="my-voting-form" data-trigger="vote-form" style="display: none">&nbsp;</span>]]></argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

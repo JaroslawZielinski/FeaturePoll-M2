@@ -1,0 +1,46 @@
+.setIcon(@icon) {
+    position: relative;
+    padding-left: 33px;
+
+    &::before {
+        content: @icon;
+        position: absolute;
+        left: 6px;
+        top: 50%;
+        transform: translateY(-50%);
+        font-size: 1.6rem;
+        font-weight: bold;
+        color: #333;
+        transition: color 0.2s ease;
+    }
+}
+.snap-report {
+    &.action-default {
+        margin-bottom: 20px;
+    }
+    &.snap-report-show {
+        /** @see https://www.w3schools.com/charsets/ref_utf_symbols.asp **/
+        /** @see https://www.w3schools.com/charsets/tryit.asp?deci=9881 **/
+        .setIcon('⚙');
+    }
+    &.snap-report-clear {
+        /** @see https://www.w3schools.com/charsets/ref_emoji_office.asp **/
+        /** @see https://www.w3schools.com/charsets/tryit.asp?deci=128465 **/
+        .setIcon('🗑');
+    }
+    &.snap-report-back {
+        /** @see https://www.w3schools.com/charsets/ref_utf_arrows.asp **/
+        /** @see https://www.w3schools.com/charsets/tryit.asp?deci=10229 **/
+        .setIcon('⟵');
+    }
+}
+a {
+    &.disable {
+        color: #333;
+        pointer-events: none;
+        cursor: default;
+        &:hover {
+            text-decoration: none;
+        }
+    }
+}

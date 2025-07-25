@@ -1,0 +1,64 @@
+<?php
+    /** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
+    /** @var \JaroslawZielinski\FeaturePoll\Block\Poll\Panel\Content $block */
+    $htmlId = 'my-content';
+    $featurePoll = $block->getFeaturePoll();
+    $tabs = $featurePoll['features'];
+    $title = sprintf('%s - %s', $featurePoll['groupName'], $featurePoll['description']);
+    $parentBlock = $block->getParentBlock();
+    /** @var \JaroslawZielinski\MySurvey\ViewModel\Content $viewModel */
+    $viewModel = $parentBlock->getViewModel();
+    $featuresJson = $viewModel->getFeaturesJson($featurePoll);
+    // @see https://www.w3schools.com/w3css/w3css_tabulators.asp
+?>
+
+<script>
+    let featuresJson = JSON.parse('<?= $featuresJson; ?>');
+</script>
+
+<div id="<?= $htmlId; ?>">
+    <h2><?= __('Questions'); ?></h2>
+    <p><?= __('Click on the buttons inside the tabbed menu:'); ?></p>
+    <div class="tab">
+        <?php foreach ($tabs as $tab): ?>
+            <button class="tabLinks" data-target="mys-<?= $tab['featureId']; ?>">
+                <?= $tab['groupName']; ?>
+            </button>
+        <?php endforeach; ?>
+    </div>
+    <?php
+        $i = 0;
+    ?>
+    <?php foreach ($tabs as $tab): ?>
+        <div id="mys-<?= $tab['featureId']; ?>" class="tabContent">
+            <div class="description">
+                <?= $tab['description']; ?>
+            </div>
+            <?= $block
+                ->getChildBlock('ms-feature')
+                ->setPollId($featurePoll['pollId'])
+                ->setTab($tab)
+                ->toHtml();
+            ?>
+        </div>
+        <?php $i++ ;?>
+    <?php endforeach; ?>
+    <script>
+        require([
+            'jquery',
+            'mage/translate'
+        ], function ($, $t) {
+            $('.tabLinks').on('click', function (event) {
+                $('.tabContent').hide();
+                $('.tabLinks').removeClass('active');
+                $(this).addClass('active');
+                const targetId = $(this).attr('data-target');
+                $('#' + targetId).show();
+            });
+            $('.tabLinks:first-child').trigger('click');
+        });
+    </script>
+</div>
+
+<?= $block->getChildHtml('voting-form-popup'); ?>
+<?= $block->getChildHtml('rules_and_regulations-popup'); ?>

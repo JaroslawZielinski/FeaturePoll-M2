@@ -1,0 +1,27 @@
+{
+    "name": "jaroslawzielinski/featurepoll-m2",
+    "description": "featurePoll Magento Module",
+    "type": "magento2-module",
+    "license": "MIT",
+    "minimum-stability": "stable",
+    "require": {
+        "brocode/module-chartee": "^1.0",
+        "fakerphp/faker": "^1.23",
+        "yireo/magento2-googletagmanager2": ">=3.7",
+        "jaroslawzielinski/otpcomponent-m2": "^1.0"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "JaroslawZielinski\\FeaturePoll\\": ""
+        }
+    },
+    "funding": [
+        {
+            "type": "By me a coffee",
+            "url": "https://www.buymeacoffee.com/jaroslawzielinski"
+        }
+    ]
+}

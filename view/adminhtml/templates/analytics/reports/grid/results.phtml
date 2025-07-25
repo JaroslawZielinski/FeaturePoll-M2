@@ -1,0 +1,63 @@
+<?php
+    /** @var \JaroslawZielinski\FeaturePoll\Block\Adminhtml\Analytics\Reports\Grid\Results $block */
+    $page = $block->getCurPage();
+    $pageSize = $block->getPageSize();
+    $emailSearch = $block->getEmailSearch() ?? '';
+    /** @var \Magento\Framework\Data\Collection $collection */
+    $collection = clone $block->getCollection();
+    $pagination = $block
+        ->getChildBlock('analytics.reports.grid.results.pagination')
+        ->setLimit($pageSize)
+        ->setCollection($collection)
+        ->toHtml();
+    $filteredCollection = $block->getFilteredCollection($emailSearch);
+?>
+<table border="1">
+    <thead>
+        <tr class="results-headers">
+            <th class="results featurepoll-value"><?= __('FeaturePoll Value'); ?></th>
+            <th class="results email">
+                <label>
+                    <?= __('E-mail'); ?>
+                    <input class="results-email admin__control-text" name="email" type="text" autocomplete="off"
+                        value="<?= $emailSearch; ?>"/>
+                </label>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+    <?php if ($filteredCollection->getSize()): ?>
+        <?php foreach ($filteredCollection->getItems() as $item): ?>
+            <?php $featurePollValue = $item->getDetail(); ?>
+            <?php $email = $item->getEmail(); ?>
+            <tr>
+                <td class="results featurepoll-value">
+                    <label>
+                        <textarea class="details" rows="1" cols="4" readonly><?= $featurePollValue; ?></textarea>
+                    </label>
+                </td>
+                <td class="results email">
+                    <?= $email; ?>
+                </td>
+            </tr>
+        <?php endforeach; ?>
+    <?php else: ?>
+        <tr>
+            <td colspan="2">
+                <p class="left"><?= __('No results found.'); ?></p>
+            </td>
+        </tr>
+    <?php endif; ?>
+    </tbody>
+    <?php if ($filteredCollection->getSize()): ?>
+    <tfoot>
+        <tr>
+            <td colspan="2" style="text-align: center;">
+                <div class="pagination">
+                    <?= $pagination; ?>
+                </div>
+            </td>
+        </tr>
+    </tfoot>
+    <?php endif; ?>
+</table>

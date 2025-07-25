@@ -1,0 +1,45 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="JaroslawZielinski_FeaturePoll::menu" title="Feature Poll Menu">
+                    <resource id="JaroslawZielinski_FeaturePoll::grids" title="Feature Poll Grids">
+                        <resource id="JaroslawZielinski_FeaturePoll::features" title="Feature Poll Features"/>
+
+                        <resource id="JaroslawZielinski_FeaturePoll::polls" title="Feature Poll Polls"/>
+
+                        <resource id="JaroslawZielinski_FeaturePoll::voters" title="Feature Poll Voters"/>
+                    </resource>
+
+                    <resource id="JaroslawZielinski_FeaturePoll::reports" title="Feature Poll Reports">
+                        <resource id="JaroslawZielinski_FeaturePoll::votes" title="Feature Poll Votes"/>
+
+                        <resource id="JaroslawZielinski_FeaturePoll::votesreports" title="Feature Poll Votes Reports"/>
+
+                        <resource id="JaroslawZielinski_FeaturePoll::clear" title="Clearing Graphic data"/>
+                    </resource>
+
+                    <resource id="JaroslawZielinski_FeaturePoll::settings" title="Feature Poll Settings"
+                        translate="title">
+                    </resource>
+                </resource>
+
+                <resource id="Magento_Backend::system">
+                    <resource id="JaroslawZielinski_FeaturePoll::elements" title="Feature Poll" sortOrder="60">
+                        <resource id="JaroslawZielinski_FeaturePoll::addedit" title="Add/Edit" sortOrder="10" />
+                    </resource>
+                </resource>
+
+                <resource id="Magento_Backend::stores">
+                    <resource id="Magento_Backend::stores_settings">
+                        <resource id="Magento_Config::config">
+                            <resource id="JaroslawZielinski_FeaturePoll::configuration"
+                                title="My Survery Configuration" translate="title" />
+                        </resource>
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

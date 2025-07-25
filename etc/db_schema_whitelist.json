@@ -1,0 +1,69 @@
+{
+    "feature_poll_features": {
+        "column": {
+            "feature_id": true,
+            "group_name": true,
+            "description": true,
+            "questions": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "feature_poll_polls": {
+        "column": {
+            "poll_id": true,
+            "group_name": true,
+            "description": true,
+            "features": true,
+            "date_from": true,
+            "date_to": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "feature_poll_voters": {
+        "column": {
+            "voter_id": true,
+            "name": true,
+            "surname": true,
+            "token": true,
+            "origin": true,
+            "vote_count": true,
+            "vote_ban": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FEATURE_POLL_VOTERS_TOKEN": true
+        }
+    },
+    "feature_poll_votes": {
+        "column": {
+            "vote_id": true,
+            "voter_id": true,
+            "voter_ip": true,
+            "voter_details": true,
+            "poll_id": true,
+            "feature_id": true,
+            "question_id": true,
+            "details": true,
+            "is_fraud": true,
+            "created_at": true,
+            "updated_at": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "FEATURE_POLL_VOTES_VOTER_ID_FEATURE_POLL_VOTERS_VOTER_ID": true,
+            "FEATURE_POLL_VOTES_POLL_ID_FEATURE_POLL_POLLS_POLL_ID": true,
+            "FEATURE_POLL_VOTES_FEATURE_ID_FEATURE_POLL_FEATURES_FEATURE_ID": true,
+            "FEATURE_POLL_VOTES_VOTER_ID_POLL_ID_FEATURE_ID_QUESTION_ID": true
+        }
+    }
+}

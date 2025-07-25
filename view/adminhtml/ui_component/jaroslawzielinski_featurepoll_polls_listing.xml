@@ -1,0 +1,285 @@
+<?xml version="1.0" ?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">
+                jaroslawzielinski_featurepoll_polls_listing.jaroslawzielinski_featurepoll_polls_listing_data_source
+            </item>
+        </item>
+    </argument>
+
+    <settings>
+        <spinner>jaroslawzielinski_featurepoll_polls_columns</spinner>
+
+        <deps>
+            <dep>jaroslawzielinski_featurepoll_polls_listing.jaroslawzielinski_featurepoll_polls_listing_data_source</dep>
+        </deps>
+
+        <buttons>
+            <button name="add">
+                <url path="*/*/new"/>
+
+                <class>primary</class>
+
+                <label translate="true">Add New Poll</label>
+            </button>
+        </buttons>
+    </settings>
+
+    <dataSource component="Magento_Ui/js/grid/provider" name="jaroslawzielinski_featurepoll_polls_listing_data_source">
+        <settings>
+            <updateUrl path="mui/index/render"/>
+
+            <!-- @see https://magento.stackexchange.com/questions/281778/same-row-content-repeat-in-the-whole-page-grid-while-navigate-pagination#answer-349891 -->
+            <storageConfig>
+                <param name="indexField" xsi:type="string">poll_id</param>
+            </storageConfig>
+        </settings>
+
+        <aclResource>JaroslawZielinski_FeaturePoll::surveys</aclResource>
+
+        <dataProvider class="JaroslawZielinski\FeaturePoll\Ui\DataProvider\Poll\ListingDataProvider"
+            name="jaroslawzielinski_featurepoll_polls_listing_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+
+                <primaryFieldName>poll_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+
+    <listingToolbar name="listing_top">
+        <settings>
+            <sticky>true</sticky>
+        </settings>
+
+        <bookmark name="bookmarks"/>
+
+        <columnsControls name="columns_controls"/>
+
+        <massaction name="listing_massaction">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="selectProvider" xsi:type="string">jaroslawzielinski_featurepoll_polls_listing.jaroslawzielinski_featurepoll_polls_listing.jaroslawzielinski_featurepoll_polls_columns.ids</item>
+
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/tree-massactions</item>
+
+                    <item name="indexField" xsi:type="string">poll_id</item>
+                </item>
+            </argument>
+
+            <action name="delete">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="type" xsi:type="string">delete</item>
+
+                        <item name="label" xsi:type="string" translate="true">Delete</item>
+
+                        <item name="url" xsi:type="url" path="jaroslawzielinski_featurepoll/polls/massdelete" />
+
+                        <item name="confirm" xsi:type="array">
+                            <item name="title" xsi:type="string" translate="true">Delete poll(s)</item>
+
+                            <item name="message" xsi:type="string" translate="true">Are you sure you want to delete selected poll(s)?</item>
+                        </item>
+                    </item>
+                </argument>
+            </action>
+        </massaction>
+
+        <filters name="listing_filters">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="templates" xsi:type="array">
+                        <item name="filters" xsi:type="array">
+                            <item name="select" xsi:type="array">
+                                <item name="component" xsi:type="string">Magento_Ui/js/form/element/ui-select</item>
+
+                                <item name="template" xsi:type="string">ui/grid/filters/elements/ui-select</item>
+                            </item>
+                        </item>
+                    </item>
+                </item>
+            </argument>
+        </filters>
+
+        <paging name="listing_paging"/>
+    </listingToolbar>
+
+    <columns name="jaroslawzielinski_featurepoll_polls_columns">
+        <settings>
+            <editorConfig>
+                <param name="selectProvider" xsi:type="string">
+                    jaroslawzielinski_featurepoll_polls_listing.jaroslawzielinski_featurepoll_polls_listing.jaroslawzielinski_featurepoll_polls_columns.ids
+                </param>
+
+                <param name="enabled" xsi:type="boolean">false</param>
+
+                <param name="indexField" xsi:type="string">poll_id</param>
+
+                <param name="clientConfig" xsi:type="array">
+                    <item name="saveUrl" path="jaroslawzielinski_featurepoll/surveys/inlineEdit" xsi:type="url"/>
+
+                    <item name="validateBeforeSave" xsi:type="boolean">false</item>
+                </param>
+            </editorConfig>
+
+            <childDefaults>
+                <param name="fieldAction" xsi:type="array">
+                    <item name="provider" xsi:type="string">
+                        jaroslawzielinski_featurepoll_polls_listing.jaroslawzielinski_featurepoll_polls_listing.jaroslawzielinski_featurepoll_polls_columns_editor
+                    </item>
+
+                    <item name="target" xsi:type="string">startEdit</item>
+
+                    <item name="params" xsi:type="array">
+                        <item name="0" xsi:type="string">${ $.$data.rowIndex }</item>
+
+                        <item name="1" xsi:type="boolean">true</item>
+                    </item>
+                </param>
+            </childDefaults>
+        </settings>
+
+        <selectionsColumn name="ids">
+            <settings>
+                <indexField>poll_id</indexField>
+            </settings>
+        </selectionsColumn>
+
+        <column name="poll_id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="bodyTmpl" xsi:type="string">ui/grid/cells/text</item>
+
+                    <item name="label" xsi:type="string" translate="true">ID</item>
+
+                    <item name="sorting" xsi:type="string">asc</item>
+
+                    <item name="sortable" xsi:type="boolean">true</item>
+
+                    <item name="visible" xsi:type="boolean">true</item>
+
+                    <item name="sortOrder" xsi:type="number">10</item>
+                </item>
+            </argument>
+        </column>
+
+        <column name="group_name">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+
+                    <item name="bodyTmpl" xsi:type="string">ui/grid/cells/text</item>
+
+                    <item name="label" xsi:type="string" translate="true">Group Name</item>
+
+                    <item name="sortable" xsi:type="boolean">true</item>
+
+                    <item name="visible" xsi:type="boolean">true</item>
+
+                    <item name="sortOrder" xsi:type="number">20</item>
+                </item>
+            </argument>
+        </column>
+
+        <column name="description">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+
+                    <item name="bodyTmpl" xsi:type="string">ui/grid/cells/text</item>
+
+                    <item name="label" xsi:type="string" translate="true">Description</item>
+
+                    <item name="sortable" xsi:type="boolean">true</item>
+
+                    <item name="visible" xsi:type="boolean">true</item>
+
+                    <item name="sortOrder" xsi:type="number">30</item>
+                </item>
+            </argument>
+        </column>
+
+        <column name="date_from" class="JaroslawZielinski\FeaturePoll\Ui\Component\Listing\Column\Polls\Date">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">dateRange</item>
+
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/date</item>
+
+                    <item name="dataType" xsi:type="string">date</item>
+
+                    <item name="label" xsi:type="string" translate="true">Date From</item>
+
+                    <item name="sorting" xsi:type="string">desc</item>
+
+                    <item name="sortable" xsi:type="boolean">true</item>
+
+                    <item name="dateFormat" xsi:type="string" translate="true">MMM d, YYYY h:mm:ss A</item>
+
+                    <item name="filterDate" xsi:type="string" translate="true">MMM d, yy</item>
+
+                    <item name="visible" xsi:type="boolean">true</item>
+
+                    <item name="sortOrder" xsi:type="number">40</item>
+                </item>
+            </argument>
+        </column>
+
+        <column name="date_to" class="JaroslawZielinski\FeaturePoll\Ui\Component\Listing\Column\Polls\Date">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">dateRange</item>
+
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/date</item>
+
+                    <item name="dataType" xsi:type="string">date</item>
+
+                    <item name="label" xsi:type="string" translate="true">Date To</item>
+
+                    <item name="sorting" xsi:type="string">desc</item>
+
+                    <item name="sortable" xsi:type="boolean">true</item>
+
+                    <item name="dateFormat" xsi:type="string" translate="true">MMM d, YYYY h:mm:ss A</item>
+
+                    <item name="filterDate" xsi:type="string" translate="true">MMM d, yy</item>
+
+                    <item name="visible" xsi:type="boolean">true</item>
+
+                    <item name="sortOrder" xsi:type="number">50</item>
+                </item>
+            </argument>
+        </column>
+
+        <column name="features" class="JaroslawZielinski\FeaturePoll\Ui\Component\Listing\Column\Polls\Features">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+
+                    <item name="bodyTmpl" xsi:type="string">ui/grid/cells/html</item>
+
+                    <item name="label" xsi:type="string" translate="true">Features</item>
+
+                    <item name="sortable" xsi:type="boolean">true</item>
+
+                    <item name="visible" xsi:type="boolean">true</item>
+
+                    <item name="sortOrder" xsi:type="number">60</item>
+                </item>
+            </argument>
+        </column>
+
+        <actionsColumn name="actions" class="JaroslawZielinski\FeaturePoll\Ui\Component\Listing\Column\Polls\Actions">
+            <settings>
+                <indexField>poll_id</indexField>
+
+                <resizeEnabled>false</resizeEnabled>
+
+                <resizeDefaultWidth>60</resizeDefaultWidth>
+            </settings>
+        </actionsColumn>
+    </columns>
+</listing>

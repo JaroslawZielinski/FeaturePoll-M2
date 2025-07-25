@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="root">
+            <block class="JaroslawZielinski\FeaturePoll\Block\Adminhtml\Analytics\Reports\Grid\Results"
+                name="analytics.reports.grid.results" as="analytics.reports.grid.results">
+                <block class="JaroslawZielinski\FeaturePoll\Block\Adminhtml\Analytics\Reports\Grid\Results\Pager"
+                    name="analytics.reports.grid.results.pagination" as="analytics.reports.grid.results.pagination">
+                    <arguments>
+                        <argument name="show_per_page" xsi:type="boolean">true</argument>
+
+                        <argument name="limit" xsi:type="number">10</argument>
+
+                        <argument name="available_limit" xsi:type="array">
+                            <item name="5" xsi:type="number">5</item>
+
+                            <item name="10" xsi:type="number">10</item>
+
+                            <item name="20" xsi:type="number">20</item>
+
+                            <item name="50" xsi:type="number">50</item>
+                        </argument>
+
+                        <argument name="show_amounts" xsi:type="boolean">true</argument>
+                    </arguments>
+                </block>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

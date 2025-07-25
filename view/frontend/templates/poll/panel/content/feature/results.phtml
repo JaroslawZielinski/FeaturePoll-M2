@@ -1,0 +1,14 @@
+<?php
+    /** @var \JaroslawZielinski\FeaturePoll\Block\Poll\Panel\Content\Feature\Results $block */
+    $value = $block->getValue();
+    $total = $block->getTotal();
+?>
+<?php if (!empty($total) && $total > 0) : ?>
+    <?php
+        $progressPercents = \JaroslawZielinski\FeaturePoll\Helper\Data::getProgressPercents((int)$value, (int)$total)
+    ?>
+    <div class="results">
+        <div class="results-bar"></div>
+        <span><?= sprintf('%s&#37; [%s/%s]', (int)$progressPercents, $value, $total);?></span>
+    </div>
+<?php endif; ?>

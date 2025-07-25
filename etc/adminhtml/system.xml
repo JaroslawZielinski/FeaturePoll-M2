@@ -1,0 +1,167 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="jaroslawzielinski_featurepoll" translate="label" sortOrder="10" showInDefault="1" showInStore="1"
+            showInWebsite="1">
+            <class>separator-top</class>
+
+            <label>feature Poll</label>
+
+            <tab>otpcomponent</tab>
+
+            <resource>JaroslawZielinski_FeaturePoll::configuration</resource>
+
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1"
+                showInStore="1" showInWebsite="1">
+                <label>General Settings</label>
+
+                <field id="enable" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1"
+                    showInStore="1">
+                    <label>Enable</label>
+
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="menu_enabled" translate="label" type="select" sortOrder="20" showInDefault="1"
+                    showInWebsite="1" showInStore="1">
+                    <label>Menu enabled</label>
+
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+
+                <field id="results_enabled" translate="label" type="select" sortOrder="30" showInDefault="1"
+                    showInWebsite="1" showInStore="1">
+                    <label>Results enabled</label>
+
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+
+                <field id="html_id" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1"
+                    showInStore="1">
+                    <label>Pane html ID</label>
+
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+
+                <field id="poll_badge" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1"
+                    showInStore="1">
+                    <label>Poll badge</label>
+
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+
+                <field id="custom_styles" translate="label" type="textarea" sortOrder="60" showInDefault="1"
+                    showInWebsite="1" showInStore="1">
+                    <label>Custom Styles</label>
+
+                    <comment><![CDATA[Additional styles...]]></comment>
+
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+
+                <field id="nonvoting_period" translate="label comment" type="text" sortOrder="70" showInDefault="1"
+                    showInWebsite="1" showInStore="1">
+                    <label>Non voting period</label>
+
+                    <comment><![CDATA[The delay between votes <i>(in minutes)</i>]]></comment>
+
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+
+                <field id="rules_and_regulations" translate="label comment" type="textarea" sortOrder="80"
+                    showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label><![CDATA[Rules &amp; Regulations]]></label>
+
+                    <depends>
+                        <field id="enable">1</field>
+                    </depends>
+                </field>
+
+                <attribute type="expanded">1</attribute>
+            </group>
+
+            <group id="polls" translate="label" type="text" sortOrder="20" showInDefault="1" showInStore="1"
+                showInWebsite="1">
+                <label>Polls</label>
+
+                <field id="items" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1"
+                    showInStore="1">
+                    <label>Polls Items</label>
+
+                    <frontend_model>JaroslawZielinski\FeaturePoll\Block\Adminhtml\System\Config\Poll\Field\Items</frontend_model>
+                    <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+
+                    <comment><![CDATA[NOTE: <strong><i>Item</i></strong> is taken from <strong>Polls</strong> grid.
+                    <strong><i>Route</i></strong> is a combination of <i>routeName_controllerName_actionName</i>.
+                     You may use <strong>Store Teller</strong> to tell route on any page using module
+                     <a href="https://github.com/JaroslawZielinski/Diagnostics-M2" target="_blank">Diagnostics</a>. See
+                     this <a href="https://github.com/JaroslawZielinski/Diagnostics-M2/blob/master/docs/please_tell_me_your_store.png" target="_blank">section</a>.]]></comment>
+                </field>
+
+                <depends>
+                    <field id="jaroslawzielinski_featurepoll/general/enable">1</field>
+                </depends>
+
+                <attribute type="expanded">1</attribute>
+            </group>
+
+            <group id="gtm_events" translate="label comment" sortOrder="30" showInDefault="1" showInWebsite="1"
+                showInStore="1">
+                <label>GTM Events</label>
+
+                <comment><![CDATA[These options must be on: <strong><i>STORES->Settings->Configuration->YIREO->Yireo GoogleTagManager [Enabled -> Yes, Container Public ID -> ...]</i></strong>]]></comment>
+
+                <field id="name1" translate="label comment" type="text" sortOrder="10" showInDefault="1"
+                    showInWebsite="1" showInStore="1">
+                    <label>Event 1</label>
+
+                    <comment><![CDATA[<i>User clicks Vote button</i>. In order not to use it, just leave empty.]]></comment>
+                </field>
+
+                <field id="name2" translate="label comment" type="text" sortOrder="20" showInDefault="1"
+                    showInWebsite="1" showInStore="1">
+                    <label>Event 2</label>
+
+                    <comment><![CDATA[<i>User fill the fields and sends request for OTP</i>. In order not to use it, just leave empty.]]></comment>
+                </field>
+
+                <field id="name3" translate="label comment" type="text" sortOrder="30" showInDefault="1"
+                    showInWebsite="1" showInStore="1">
+                    <label>Event 3</label>
+
+                    <comment><![CDATA[<i>User authenticated and voted</i>. In order not to use it, just leave empty.]]></comment>
+                </field>
+
+                <field id="name4" translate="label comment" type="text" sortOrder="40" showInDefault="1"
+                    showInWebsite="1" showInStore="1">
+                    <label>Event 4</label>
+
+                    <comment><![CDATA[Vote failed for some reason. In order not to use it, just leave empty.]]></comment>
+                </field>
+
+                <depends>
+                    <field id="jaroslawzielinski_featurepoll/general/enable">1</field>
+                </depends>
+
+                <attribute type="expanded">1</attribute>
+            </group>
+        </section>
+    </system>
+</config>

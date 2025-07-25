@@ -1,0 +1,60 @@
+<?php
+    /** @see https://www.w3schools.com/Css/css_positioning.asp#w3-theme-border */
+    /** @see https://www.w3schools.com/howto/tryit.asp?filename=tryhow_js_popup */
+    /** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
+    /** @var \JaroslawZielinski\FeaturePoll\Block\Poll\Panel $block */
+    $htmlId = $block->getHtmlId();
+    $pollBadge = $block->getPollBadge();
+    $featurePoll = $block->getFeaturePoll();
+    $customStyles = trim($block->getCustomStyles() ?? '');;
+?>
+<?php
+$mSPanelCustomCss = <<<css
+    .poll-panel-wrapper .mobile-poll-trigger::before {
+        content: '{$pollBadge}';
+    }
+css;
+if (!empty($customStyles)) {
+    $mSPanelCustomCss .= $customStyles;
+}
+?>
+<?= /* @noEscape */ $secureRenderer->renderTag('style', [], $mSPanelCustomCss, false) ?>
+<div class="poll-panel-wrapper">
+    <div id="<?= $htmlId; ?>" class="my-wrapper">
+        <div class="my-container">
+            <div class="my-item my-button-div">
+                <button id="<?= $htmlId; ?>-button" class="my-button" type="button">
+                    <?= __($pollBadge); ?>
+                </button>
+            </div>
+
+            <div class="my-item my-pane-div">
+                <?= $block
+                    ->getChildBlock('ms-content')
+                    ->setHtmlId($htmlId)
+                    ->setFeaturePoll($featurePoll)
+                    ->toHtml();
+                ?>
+            </div>
+        </div>
+    </div>
+    <!-- ADD THIS: Mobile floating trigger -->
+    <div class="mobile-poll-trigger" id="mobile-trigger"></div>
+</div>
+<?php
+    $panelScript = <<<script
+        require([
+            'jquery'
+        ], function ($) {
+            $('#mobile-trigger').on('click', function (event) {
+                $('#{$htmlId}').toggleClass('show');
+            });
+            $('#{$htmlId}-button').on('click', function (event) {
+                $('.my-content').show();
+                $('.show .my-content').hide();
+                $('#{$htmlId}').toggleClass('show');
+            });
+        });
+    script;
+?>
+<?= /* @noEscape */ $secureRenderer->renderTag('script', ['type' => 'text/javascript'], $panelScript, false) ?>

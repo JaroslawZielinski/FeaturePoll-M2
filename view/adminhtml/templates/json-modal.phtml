@@ -1,0 +1,106 @@
+<?php
+    /** @var \Magento\Backend\Block\Template $block */
+?>
+<!-- Hidden template -->
+<div id="json-modal-template" style="display: none;">
+    <div class="json-modal-overlay">
+        <div class="json-modal-container">
+            <div class="json-modal-header">
+                <h3 class="json-modal-title"><?= __('JSON Data Viewer'); ?></h3>
+                <button class="json-modal-close">&times;</button>
+            </div>
+            <div class="json-modal-actions">
+                <button class="json-btn json-btn-primary json-copy-btn"><?= __('Copy'); ?></button>
+                <button class="json-btn json-btn-success json-download-btn"><?= __('Download'); ?></button>
+            </div>
+            <pre class="json-display"></pre>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    function showJsonModal(encodedJson) {
+        try {
+            // Decode and format JSON
+            const jsonString = atob(encodedJson);
+            const jsonObject = JSON.parse(jsonString);
+            const formattedJson = JSON.stringify(jsonObject, null, 2);
+            // Clone template
+            const template = document.getElementById('json-modal-template');
+            const modal = template.cloneNode(true);
+            modal.id = 'json-modal-overlay';
+            modal.style.display = 'flex';
+            // Set content
+            modal.querySelector('.json-display').textContent = formattedJson;
+            // Bind events
+            modal.querySelector('.json-modal-close').onclick = closeJsonModal;
+            modal.querySelector('.json-copy-btn').onclick = function() {
+                copyJsonToClipboard(btoa(formattedJson));
+            };
+            modal.querySelector('.json-download-btn').onclick = function() {
+                downloadJson(btoa(formattedJson));
+            };
+            // Close on overlay click
+            modal.onclick = function(e) {
+                if (e.target === modal) {
+                    closeJsonModal();
+                }
+            };
+            // Add to page
+            document.body.appendChild(modal);
+        } catch (error) {
+            alert('Error: Invalid JSON data');
+            console.error('JSON parsing error:', error);
+        }
+    }
+
+    function closeJsonModal() {
+        const modal = document.getElementById('json-modal-overlay');
+        if (modal) {
+            modal.remove();
+        }
+    }
+
+    function copyJsonToClipboard(encodedJson) {
+        const jsonText = atob(encodedJson);
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(jsonText).then(function() {
+                alert('JSON copied to clipboard!');
+            }).catch(function(err) {
+                fallbackCopyToClipboard(jsonText);
+            });
+        } else {
+            fallbackCopyToClipboard(jsonText);
+        }
+    }
+
+    function downloadJson(encodedJson) {
+        const jsonText = atob(encodedJson);
+        const blob = new Blob([jsonText], {type: 'application/json'});
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'json_data_' + new Date().getTime() + '.json';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        window.URL.revokeObjectURL(url);
+    }
+
+    function fallbackCopyToClipboard(text) {
+        const textArea = document.createElement("textarea");
+        textArea.value = text;
+        textArea.style.position = "fixed";
+        textArea.style.left = "-999999px";
+        document.body.appendChild(textArea);
+        textArea.focus();
+        textArea.select();
+        try {
+            document.execCommand('copy');
+            alert('JSON copied to clipboard!');
+        } catch (err) {
+            alert('Failed to copy. Please copy manually.');
+        }
+        document.body.removeChild(textArea);
+    }
+</script>

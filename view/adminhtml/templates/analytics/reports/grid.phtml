@@ -1,0 +1,104 @@
+<?php
+    /** @var \JaroslawZielinski\FeaturePoll\Block\Adminhtml\Analytics\Reports\Grid $block */
+    $htmlFormId = $block->getFormHtmlId();
+    $featurePollId = $block->getFeaturepollId();
+    $collection = $block->getInitialCollection($featurePollId);
+?>
+<form role="form" id="<?= $htmlFormId; ?>" action="#" method="post" autocomplete="off" novalidate="novalidate">
+    <input name="form_key" type="hidden" value="" />
+
+    <input name="featurePollId" type="hidden" value="<?= $featurePollId; ?>" />
+
+    <div class="search-results">
+        <?=
+            $block
+                ->getChildBlock('analytics.reports.grid.results')
+                ->setPageSize(5)
+                ->setCurPage(1)
+                ->setCollection($collection)
+                ->toHtml();
+        ?>
+    </div>
+</form>
+
+<script type="text/x-magento-init">
+    {
+        "#<?= $htmlFormId; ?>": {
+            "validation": {}
+        }
+    }
+</script>
+
+<script>
+    require([
+        'jquery',
+        'featurePollUtils',
+        'mage/validation',
+        'domReady!'
+    ], function ($, utils) {
+        const ajaxUrl = '<?= $block->getUrl('jaroslawzielinski_featurepoll/votes/featurepollvalue'); ?>';
+        let dataForm = $('#<?= $htmlFormId; ?>');
+
+        $('input[name="form_key"]').val(FORM_KEY);
+
+        function onPageClick(event) {
+            const page = $(this).attr('data-page');
+            dataForm.find('input[name="p"]').each(function(index) { $(this).remove(); });
+            dataForm.append($('<input>').attr({
+                'type': 'hidden',
+                'name': 'p',
+                'value': page
+            }));
+            loadResults();
+        }
+
+        function onLimiterChange(event) {
+            const limiter = event.target.value;
+            dataForm.find('input[name="p"]').each(function(index) { $(this).remove(); });
+            dataForm.find('input[name="limiter"]').each(function(index) { $(this).remove(); });
+            dataForm.append($('<input>').attr({
+                'type': 'hidden',
+                'name': 'limiter',
+                'value': limiter
+            }));
+            loadResults();
+        }
+
+        function onEmailChange(event) {
+            if ('Enter' === event.key) {
+                const email = event.target.value;
+                // Do something
+                dataForm.find('input[name="email"]').each(function(index) { $(this).remove(); });
+                dataForm.append($('<input>').attr({
+                    'type': 'hidden',
+                    'name': 'email',
+                    'value': email
+                }));
+                loadResults();
+            }
+        }
+
+        function loadResults() {
+            utils.ajaxGetItJson(ajaxUrl, dataForm.serializeArray(), function (data) {
+                $('#<?= $htmlFormId; ?> .search-results').html(data['result']);
+                bindButtons();
+            }, false);
+        }
+
+        function bindButtons() {
+            $('#<?= $htmlFormId; ?> .search-results a.page').off().on('click', onPageClick);
+            $('#<?= $htmlFormId; ?> .search-results a.action').off().on('click', onPageClick);
+            $('#<?= $htmlFormId; ?> .search-results select.limiter-options').off().on('change', onLimiterChange);
+            $('#<?= $htmlFormId; ?> .search-results .click-off').off().on('click', function (event) {
+                event.preventDefault();
+            });
+            const email = $('#<?= $htmlFormId; ?> input.results-email');
+            email.off().on('keypress', onEmailChange);
+            email.focus();
+            const tmpStr = email.val();
+            email.val('');
+            email.val(tmpStr);
+        }
+        bindButtons();
+    });
+</script>

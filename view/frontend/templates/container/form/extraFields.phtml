@@ -1,0 +1,32 @@
+<?php
+    /** @var \JaroslawZielinski\OTPComponent\Block\Container\Form\Fields $block */
+    /** @var \JaroslawZielinski\OTPComponent\Block\Container\Form $parentBlock */
+    $parentBlock = $block->getParentBlock();
+    $formId = $parentBlock->getFormId();
+    $isDisabledFields = $parentBlock->getDisableFields();
+?>
+<div class="row">
+    <div class="col-24 col-sm-24">
+        <div class="subrow">
+            <input type="hidden" name="featurepoll_id" value="<?= $parentBlock->getData('featurepoll_id'); ?>">
+
+            <input type="hidden" name="featurepoll_value" value="<?= $parentBlock->getData('featurepoll_value') ?? ''; ?>">
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-24 col-sm-24">
+        <div class="subrow">
+            <input id="rr" name="rr" type="checkbox" <?= $parentBlock->getRequired(); ?>
+                <?php if ($isDisabledFields):?>disabled<?php endif; ?>>
+            <label for="rr">
+                <span data-trigger="rules-and-regulations">
+                   <?= __('I confirm I read and agree with the'); ?>
+                    <a href="javascript:void(0);" onclick="javascript:void(0);">
+                        <?= __('rules and regulations'); ?>
+                    </a>
+                </span>
+            </label>
+        </div>
+    </div>
+</div>

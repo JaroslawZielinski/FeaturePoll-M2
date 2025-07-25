@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <module name="JaroslawZielinski_FeaturePoll">
+        <sequence>
+            <module name="JaroslawZielinski_OTPComponent"/>
+
+            <module name="BroCode_Chartee"/>
+
+            <module name="Yireo_GoogleTagManager2"/>
+        </sequence>
+    </module>
+</config>

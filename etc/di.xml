@@ -1,0 +1,191 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- Console Command DI -->
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="voter_and_vote_fixture_generation" xsi:type="object">
+                    JaroslawZielinski\FeaturePoll\Console\Command\VoteFixtures
+                </item>
+            </argument>
+        </arguments>
+    </type>
+
+    <!-- Logger DI -->
+    <virtualType name="JaroslawZielinski\FeaturePoll\Logger\Handler" type="Magento\Framework\Logger\Handler\Base">
+        <arguments>
+            <argument name="fileName" xsi:type="string">var/log/jaroslawzielinski_featurepoll.log</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="JaroslawZielinski\FeaturePoll\Logger" type="Magento\Framework\Logger\Monolog">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="debug" xsi:type="object">JaroslawZielinski\FeaturePoll\Logger\Handler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="JaroslawZielinski\FeaturePoll\Controller\Adminhtml\Features\Save">
+        <arguments>
+            <argument name="logger" xsi:type="object">JaroslawZielinski\FeaturePoll\Logger</argument>
+        </arguments>
+    </type>
+
+    <type name="JaroslawZielinski\FeaturePoll\Controller\Adminhtml\Polls\Save">
+        <arguments>
+            <argument name="logger" xsi:type="object">JaroslawZielinski\FeaturePoll\Logger</argument>
+        </arguments>
+    </type>
+
+    <type name="JaroslawZielinski\FeaturePoll\Controller\Voting\Vote">
+        <arguments>
+            <argument name="logger" xsi:type="object">JaroslawZielinski\FeaturePoll\Logger</argument>
+        </arguments>
+    </type>
+
+    <type name="JaroslawZielinski\FeaturePoll\Controller\Voting\VoteNonGuest">
+        <arguments>
+            <argument name="logger" xsi:type="object">JaroslawZielinski\FeaturePoll\Logger</argument>
+        </arguments>
+    </type>
+
+    <type name="JaroslawZielinski\FeaturePoll\Controller\Voting\Otp\Preprocess">
+        <arguments>
+            <argument name="logger" xsi:type="object">JaroslawZielinski\FeaturePoll\Logger</argument>
+        </arguments>
+    </type>
+
+    <type name="JaroslawZielinski\FeaturePoll\Controller\Voting\Otp\Process">
+        <arguments>
+            <argument name="logger" xsi:type="object">JaroslawZielinski\FeaturePoll\Logger</argument>
+        </arguments>
+    </type>
+
+    <type name="JaroslawZielinski\FeaturePoll\Observer\Validation">
+        <arguments>
+            <argument name="logger" xsi:type="object">JaroslawZielinski\FeaturePoll\Logger</argument>
+        </arguments>
+    </type>
+
+    <type name="JaroslawZielinski\FeaturePoll\Observer\Action">
+        <arguments>
+            <argument name="logger" xsi:type="object">JaroslawZielinski\FeaturePoll\Logger</argument>
+        </arguments>
+    </type>
+
+    <type name="JaroslawZielinski\FeaturePoll\Model\VoteFixtures\Console">
+        <arguments>
+            <argument name="logger" xsi:type="object">JaroslawZielinski\FeaturePoll\Logger</argument>
+        </arguments>
+    </type>
+
+    <!-- CRUD preferences -->
+    <preference for="JaroslawZielinski\FeaturePoll\Api\Data\FeatureInterface"
+        type="JaroslawZielinski\FeaturePoll\Model\Data\Feature"/>
+
+    <preference for="JaroslawZielinski\FeaturePoll\Api\Data\PollInterface"
+        type="JaroslawZielinski\FeaturePoll\Model\Data\Poll"/>
+
+    <preference for="JaroslawZielinski\FeaturePoll\Api\Data\VoterInterface"
+        type="JaroslawZielinski\FeaturePoll\Model\Data\Voter"/>
+
+    <preference for="JaroslawZielinski\FeaturePoll\Api\Data\VoteInterface"
+        type="JaroslawZielinski\FeaturePoll\Model\Data\Vote"/>
+
+    <preference for="JaroslawZielinski\FeaturePoll\Api\FeatureRepositoryInterface"
+        type="JaroslawZielinski\FeaturePoll\Model\FeatureRepository"/>
+
+    <preference for="JaroslawZielinski\FeaturePoll\Api\PollRepositoryInterface"
+        type="JaroslawZielinski\FeaturePoll\Model\PollRepository"/>
+
+    <preference for="JaroslawZielinski\FeaturePoll\Api\VoteRepositoryInterface"
+        type="JaroslawZielinski\FeaturePoll\Model\VoteRepository"/>
+
+    <preference for="JaroslawZielinski\FeaturePoll\Api\VoterRepositoryInterface"
+        type="JaroslawZielinski\FeaturePoll\Model\VoterRepository"/>
+
+    <!-- Search preferences -->
+    <preference for="JaroslawZielinski\FeaturePoll\Api\Data\FeatureSearchResultsInterface"
+        type="Magento\Framework\Api\SearchResults"/>
+
+    <preference for="JaroslawZielinski\FeaturePoll\Api\Data\PollSearchResultsInterface"
+        type="Magento\Framework\Api\SearchResults"/>
+
+    <preference for="JaroslawZielinski\FeaturePoll\Api\Data\VoteSearchResultsInterface"
+        type="Magento\Framework\Api\SearchResults"/>
+
+    <preference for="JaroslawZielinski\FeaturePoll\Api\Data\VoterSearchResultsInterface"
+        type="Magento\Framework\Api\SearchResults"/>
+
+    <!-- Features Grid -->
+    <virtualType name="JaroslawZielinski\FeaturePoll\Model\ResourceModel\Feature\Grid\Collection"
+        type="JaroslawZielinski\FeaturePoll\Ui\DataProvider\Feature\Listing\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">feature_poll_features</argument>
+
+            <argument name="resourceModel" xsi:type="string">JaroslawZielinski\FeaturePoll\Model\ResourceModel\Feature</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Polls Grid -->
+    <virtualType name="JaroslawZielinski\FeaturePoll\Model\ResourceModel\Poll\Grid\Collection"
+        type="JaroslawZielinski\FeaturePoll\Ui\DataProvider\Poll\Listing\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">feature_poll_polls</argument>
+            <argument name="resourceModel" xsi:type="string">JaroslawZielinski\FeaturePoll\Model\ResourceModel\Poll</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Voters Grid -->
+    <virtualType name="JaroslawZielinski\FeaturePoll\Model\ResourceModel\Voter\Grid\Collection"
+        type="JaroslawZielinski\FeaturePoll\Ui\DataProvider\Voter\Listing\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">feature_poll_voters</argument>
+            <argument name="resourceModel" xsi:type="string">JaroslawZielinski\FeaturePoll\Model\ResourceModel\Voter</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- Votes Grid -->
+    <type name="JaroslawZielinski\FeaturePoll\Model\ResourceModel\Vote\Grid\Collection">
+        <arguments>
+            <argument name="logger" xsi:type="object">JaroslawZielinski\FeaturePoll\Logger</argument>
+            <argument name="mainTable" xsi:type="string">feature_poll_votes</argument>
+            <argument name="eventPrefix" xsi:type="string">feature_poll_votes_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">feature_poll_votes_collection</argument>
+            <argument name="resourceModel" xsi:type="string">JaroslawZielinski\FeaturePoll\Model\ResourceModel\Vote</argument>
+        </arguments>
+    </type>
+
+    <!-- All grids DataProviders -->
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="jaroslawzielinski_featurepoll_features_listing_data_source" xsi:type="string">
+                    JaroslawZielinski\FeaturePoll\Model\ResourceModel\Feature\Grid\Collection
+                </item>
+
+                <item name="jaroslawzielinski_featurepoll_polls_listing_data_source" xsi:type="string">
+                    JaroslawZielinski\FeaturePoll\Model\ResourceModel\Poll\Grid\Collection
+                </item>
+
+                <item name="jaroslawzielinski_featurepoll_voters_listing_data_source" xsi:type="string">
+                    JaroslawZielinski\FeaturePoll\Model\ResourceModel\Voter\Grid\Collection
+                </item>
+
+                <item name="jaroslawzielinski_featurepoll_votes_listing_data_source" xsi:type="string">
+                    JaroslawZielinski\FeaturePoll\Model\ResourceModel\Vote\Grid\Collection
+                </item>
+            </argument>
+        </arguments>
+    </type>
+
+    <virtualType name="JaroslawZielinski\FeaturePoll\Block\ViewModel\VoteResultsBarChartConfiguration"
+        type="BroCode\Chartee\Block\ViewModel\BaseChartDataViewModel">
+        <arguments>
+            <argument name="dataBuilder" xsi:type="object">
+                JaroslawZielinski\FeaturePoll\Model\Vote\VoteResultsBarChartDataBuilder
+            </argument>
+        </arguments>
+    </virtualType>
+</config>

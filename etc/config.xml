@@ -1,0 +1,86 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <jaroslawzielinski_featurepoll>
+            <general>
+                <enable>0</enable>
+
+                <menu_enabled>0</menu_enabled>
+
+                <results_enabled>0</results_enabled>
+
+                <html_id>ms-panel</html_id>
+
+                <poll_badge><![CDATA[fPoll]]></poll_badge>
+
+                <custom_styles><![CDATA[]]></custom_styles>
+
+                <rules_and_regulations><![CDATA[
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-24">
+                <div class="jumbotron">
+                    <p>featurePoll Voting Rules:</p>
+                    <ol>
+                        <li>Participation in featurePoll is completely voluntary.</li>
+                        <li>You can cast one vote per 24 hours per question set.</li>
+                        <li>You can cast one vote per form.</li>
+                        <li>You can participate in multiple surveys.</li>
+                        <li>You can vote as a customer or guest customer.</li>
+                    <ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    ]]></rules_and_regulations>
+
+                <nonvoting_period>1440</nonvoting_period>
+            </general>
+
+            <emails>
+                <name><![CDATA[Jarosław Zieliński]]></name>
+
+                <email><![CDATA[jarek.zielinski82@gmail.com]]></email>
+            </emails>
+
+            <gtm_events>
+                <name1>vote_click</name1>
+
+                <name2>vote_otp</name2>
+
+                <name3>voted</name3>
+
+                <name4>vote_failed</name4>
+            </gtm_events>
+        </jaroslawzielinski_featurepoll>
+    </default>
+
+    <stores>
+        <pl>
+            <jaroslawzielinski_featurepoll>
+                <general>
+                    <form_badge><![CDATA[Ankieta]]></form_badge>
+
+                    <rules_and_regulations><![CDATA[
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-24">
+                <div class="jumbotron">
+                    <p>Regulamin głosowania w featurePoll:</p>
+                    <ol>
+                        <li>Udział w featurePoll jest całkowicie dobrowolny</li>
+                        <li>Można oddać 1 głos w ciągu 24h w danym zestawie pytań.</li>
+                        <li>Można oddać 1 głos w ramach jednego formularza.</li>
+                        <li>Można brać udział w wielu ankietach.</li>
+                        <li>Można głosować jako użytkownik zalogowany i niezalogowany.</li>
+                    <ol>
+                </div>
+            </div>
+        </div>
+    </div>
+    ]]></rules_and_regulations>
+                </general>
+            </jaroslawzielinski_featurepoll>
+        </pl>
+    </stores>
+</config>

@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="JaroslawZielinski_FeaturePoll::css/analytics/button.css"/>
+
+        <css src="JaroslawZielinski_FeaturePoll::css/analytics/reports/grid/results/pager.css" />
+    </head>
+
+    <body>
+        <referenceContainer name="content">
+            <block class="JaroslawZielinski\FeaturePoll\Block\Adminhtml\Analytics" name="analytics" as="analytics">
+                <block class="JaroslawZielinski\FeaturePoll\Block\Adminhtml\Analytics\Button"
+                   name="analytics.snap_report_back" as="analytics.snap_report_back">
+                    <arguments>
+                        <argument name="html_id" xsi:type="string">snap-report-back</argument>
+
+                        <argument name="html_class" xsi:type="string">action-default snap-report snap-report-back</argument>
+
+                        <argument name="label" xsi:type="string" translate="true">Back</argument>
+
+                        <argument name="redirect_url" xsi:type="string">jaroslawzielinski_featurepoll/votes/index</argument>
+                    </arguments>
+                </block>
+
+                <block class="BroCode\Chartee\Block\Widget\BaseChart" name="analytics.bar_chart"
+                    as="analytics.bar_chart">
+                    <action method="setViewModel">
+                        <argument name="viewModel" xsi:type="object">
+                            JaroslawZielinski\FeaturePoll\Block\ViewModel\VoteResultsBarChartConfiguration
+                        </argument>
+                    </action>
+                </block>
+
+                <block class="JaroslawZielinski\FeaturePoll\Block\Adminhtml\Analytics\Legend"
+                    name="analytics.legend" as="analytics.legend"/>
+
+                <block class="JaroslawZielinski\FeaturePoll\Block\Adminhtml\Analytics\Reports"
+                    name="analytics.reports" as="analytics.reports">
+                    <block class="JaroslawZielinski\FeaturePoll\Block\Adminhtml\Analytics\Reports\Grid"
+                        name="analytics.reports.grid" as="analytics.reports.grid">
+                        <block class="JaroslawZielinski\FeaturePoll\Block\Adminhtml\Analytics\Reports\Grid\Results"
+                            name="analytics.reports.grid.results" as="analytics.reports.grid.results">
+                            <block class="JaroslawZielinski\FeaturePoll\Block\Adminhtml\Analytics\Reports\Grid\Results\Pager"
+                                name="analytics.reports.grid.results.pagination"
+                                as="analytics.reports.grid.results.pagination">
+                                <arguments>
+                                    <argument name="show_per_page" xsi:type="boolean">true</argument>
+
+                                    <argument name="limit" xsi:type="number">10</argument>
+
+                                    <argument name="available_limit" xsi:type="array">
+                                        <item name="5" xsi:type="number">5</item>
+
+                                        <item name="10" xsi:type="number">10</item>
+
+                                        <item name="20" xsi:type="number">20</item>
+
+                                        <item name="50" xsi:type="number">50</item>
+                                    </argument>
+
+                                    <argument name="show_amounts" xsi:type="boolean">true</argument>
+                                </arguments>
+                            </block>
+                        </block>
+                    </block>
+                </block>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

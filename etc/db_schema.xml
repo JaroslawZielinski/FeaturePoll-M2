@@ -1,0 +1,134 @@
+<?xml version="1.0" ?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="feature_poll_features" engine="innodb" resource="default" comment="Feature Poll Features">
+        <column name="feature_id" identity="true" nullable="false" padding="6" unsigned="true" xsi:type="int"
+            comment="Feature ID"/>
+
+        <column name="group_name" nullable="false" xsi:type="text" comment="Group Name"/>
+
+        <column name="description" nullable="true" xsi:type="text" comment="Description"/>
+
+        <column name="questions" nullable="false" xsi:type="text" comment="Questions"/>
+
+        <column name="created_at" nullable="false" on_update="false" default="CURRENT_TIMESTAMP" xsi:type="timestamp"
+            comment="Created At"/>
+
+        <column name="updated_at" nullable="false" on_update="true" default="CURRENT_TIMESTAMP" xsi:type="timestamp"
+            comment="Updated At"/>
+
+        <constraint referenceId="PRIMARY" xsi:type="primary">
+            <column name="feature_id"/>
+        </constraint>
+    </table>
+
+    <table name="feature_poll_polls" engine="innodb" resource="default" comment="Feature Poll Polls">
+        <column name="poll_id" identity="true" nullable="false" padding="6" unsigned="true" xsi:type="int"
+            comment="Poll ID"/>
+
+        <column name="group_name" nullable="false" xsi:type="text" comment="Group Name"/>
+
+        <column name="description" nullable="true" xsi:type="text" comment="Description"/>
+
+        <column name="features" nullable="false" xsi:type="text" comment="Features"/>
+
+        <column name="date_from" nullable="true" xsi:type="date" comment="Date From"/>
+
+        <column name="date_to" nullable="true" xsi:type="date" comment="Date To"/>
+
+        <column name="created_at" nullable="false" on_update="false" default="CURRENT_TIMESTAMP" xsi:type="timestamp"
+            comment="Created At"/>
+
+        <column name="updated_at" nullable="false" on_update="true" default="CURRENT_TIMESTAMP" xsi:type="timestamp"
+            comment="Updated At"/>
+
+        <constraint referenceId="PRIMARY" xsi:type="primary">
+            <column name="poll_id"/>
+        </constraint>
+    </table>
+
+    <table name="feature_poll_voters" engine="innodb" resource="default" comment="Feature Poll Voters">
+        <column name="voter_id" identity="true" nullable="false" padding="6" unsigned="true" xsi:type="int"
+            comment="Voter ID"/>
+
+        <column name="name" nullable="false" length="255" xsi:type="varchar" comment="First Name"/>
+
+        <column name="surname" nullable="true" length="255" xsi:type="varchar" comment="Last Name"/>
+
+        <column name="token" nullable="false" length="255" xsi:type="varchar" comment="Customer Email"/>
+
+        <column name="origin" nullable="false" unsigned="false" identity="false" xsi:type="smallint" default="0"
+            comment="Origin"/>
+
+        <column name="vote_count" nullable="false" default="0" unsigned="true" xsi:type="smallint" comment="counter"/>
+
+        <column name="vote_ban" nullable="true" xsi:type="timestamp" comment="Ban Period"/>
+
+        <column name="created_at" nullable="false" on_update="false" default="CURRENT_TIMESTAMP" xsi:type="timestamp"
+            comment="Created At"/>
+
+        <column name="updated_at" nullable="false" on_update="true" default="CURRENT_TIMESTAMP" xsi:type="timestamp"
+            comment="Updated At"/>
+
+        <constraint referenceId="PRIMARY" xsi:type="primary">
+            <column name="voter_id"/>
+        </constraint>
+
+        <constraint xsi:type="unique" referenceId="MY_SURVEY_VOTERS_TOKEN">
+            <column name="token"/>
+        </constraint>
+    </table>
+
+    <table name="feature_poll_votes" engine="innodb" resource="default" comment="Feature Poll Votes">
+        <column name="vote_id" identity="true" nullable="false" padding="6" unsigned="true" xsi:type="int" comment="ID"/>
+
+        <column name="voter_id" nullable="false" padding="6" unsigned="true" xsi:type="int" comment="Voter ID"/>
+
+        <column name="voter_ip" nullable="true" length="15" xsi:type="varchar" default="0" comment="Voter IP"/>
+
+        <column name="voter_details" nullable="true" xsi:type="text" comment="Voter Details"/>
+
+        <column name="poll_id" nullable="false" padding="6" unsigned="true" xsi:type="int" comment="Poll ID"/>
+
+        <column name="feature_id" nullable="false" padding="6" unsigned="true" xsi:type="int" comment="Feature ID"/>
+
+        <column name="question_id" nullable="false" padding="6" unsigned="true" xsi:type="int" comment="Question ID"/>
+
+        <column name="details" nullable="true" xsi:type="text" comment="Details"/>
+
+        <column name="is_fraud" nullable="false" unsigned="false" identity="false" xsi:type="smallint" default="0"
+            comment="Is Fraud."/>
+
+        <column name="created_at" nullable="false" on_update="false" default="CURRENT_TIMESTAMP" xsi:type="timestamp"
+            comment="Created At"/>
+
+        <column name="updated_at" nullable="false" on_update="true" default="CURRENT_TIMESTAMP" xsi:type="timestamp"
+            comment="Updated At"/>
+
+        <constraint referenceId="PRIMARY" xsi:type="primary">
+            <column name="vote_id"/>
+        </constraint>
+
+        <constraint xsi:type="foreign" referenceId="FEATURE_POLL_VOTES_VOTER_ID_FEATURE_POLL_VOTERS_VOTER_ID"
+            table="feature_poll_votes" column="voter_id" referenceTable="feature_poll_voters" referenceColumn="voter_id"
+            onDelete="CASCADE"/>
+
+        <constraint xsi:type="foreign" referenceId="FEATURE_POLL_VOTES_POLL_ID_FEATURE_POLL_POLLS_POLL_ID"
+            table="feature_poll_votes" column="poll_id" referenceTable="feature_poll_polls" referenceColumn="poll_id"
+            onDelete="CASCADE"/>
+
+        <constraint xsi:type="foreign" referenceId="FEATURE_POLL_VOTES_FEATURE_ID_FEATURE_POLL_FEATURES_FEATURE_ID"
+            table="feature_poll_votes" column="feature_id" referenceTable="feature_poll_features"
+            referenceColumn="feature_id" onDelete="CASCADE"/>
+
+        <constraint xsi:type="unique" referenceId="FEATURE_POLL_VOTES_VOTER_ID_POLL_ID_FEATURE_ID_QUESTION_ID">
+            <column name="voter_id"/>
+
+            <column name="poll_id"/>
+
+            <column name="feature_id"/>
+
+            <column name="question_id"/>
+        </constraint>
+    </table>
+</schema>

@@ -1,0 +1,50 @@
+.show-featurepoll-logo(@opacity) {
+    background: url(../images/featurePoll-logo.png) no-repeat center;
+    height: calc(3rem);
+    content: " ";
+    opacity: @opacity;
+}
+
+.admin__menu {
+    #menu-jaroslawzielinski-featurepoll-menu > a {
+        &:before {
+            .show-featurepoll-logo(0.5);
+        }
+        &:hover:before {
+            .show-featurepoll-logo(1.0);
+        }
+    }
+
+    #menu-jaroslawzielinski-featurepoll-menu._active._show > a {
+        &:before {
+            .show-featurepoll-logo(1.0);
+        }
+    }
+}
+
+.disabled-link {
+    color: black;
+}
+
+.my-form-select {
+    .admin__control-select {
+        width: 100%;
+    }
+}
+@featurepoll-value-min-width: 687px;
+.results {
+    padding: 10px;
+    .details {
+        width: @featurepoll-value-min-width;
+        height: 78px
+    }
+}
+.results-headers {
+    height: 43px;
+    input {
+        font-weight: normal;
+    }
+}
+.featurepoll-value {
+    min-width: @featurepoll-value-min-width;
+}

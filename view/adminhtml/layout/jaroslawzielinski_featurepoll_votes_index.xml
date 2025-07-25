@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="JaroslawZielinski_FeaturePoll::css/bootstrap.css"/>
+
+        <css src="JaroslawZielinski_FeaturePoll::css/json-modal.css"/>
+
+        <css src="JaroslawZielinski_FeaturePoll::css/analytics/button.css"/>
+    </head>
+
+    <body>
+        <referenceContainer name="content">
+            <block class="JaroslawZielinski\FeaturePoll\Block\Adminhtml\Analytics" name="analytics" as="analytics">
+                <block class="JaroslawZielinski\FeaturePoll\Block\Adminhtml\Analytics\Button"
+                    name="analytics.clear_snap_button" as="analytics.clear_snap_button">
+                    <arguments>
+                        <argument name="html_id" xsi:type="string">clear-snap-report</argument>
+
+                        <argument name="html_class" xsi:type="string">action-default snap-report snap-report-clear</argument>
+
+                        <argument name="label" xsi:type="string" translate="true">Clear Graph</argument>
+
+                        <argument name="redirect_url" xsi:type="string">jaroslawzielinski_featurepoll/votes/clear</argument>
+                    </arguments>
+                </block>
+
+                <block class="BroCode\Chartee\Block\Widget\BaseChart" name="analytics.bar_chart"
+                    as="analytics.bar_chart">
+                    <action method="setViewModel">
+                        <argument name="viewModel" xsi:type="object">
+                            JaroslawZielinski\FeaturePoll\Block\ViewModel\VoteResultsBarChartConfiguration
+                        </argument>
+                    </action>
+                </block>
+
+                <block class="JaroslawZielinski\FeaturePoll\Block\Adminhtml\Analytics\Legend" name="analytics.legend"
+                    as="analytics.legend"/>
+
+                <block class="JaroslawZielinski\FeaturePoll\Block\Adminhtml\Analytics\Button" name="analytics.snap_report"
+                    as="analytics.snap_report">
+                    <arguments>
+                        <argument name="html_id" xsi:type="string">snap-report</argument>
+
+                        <argument name="html_class" xsi:type="string">action-default snap-report snap-report-show</argument>
+
+                        <argument name="label" xsi:type="string" translate="true">Snap report</argument>
+
+                        <argument name="redirect_url" xsi:type="string">jaroslawzielinski_featurepoll/votes/reports</argument>
+                    </arguments>
+                </block>
+            </block>
+
+            <uiComponent name="jaroslawzielinski_featurepoll_votes_listing"/>
+
+            <block class="Magento\Backend\Block\Template" template="JaroslawZielinski_FeaturePoll::json-modal.phtml"
+                name="json.modal.script" as="json.modal.script"/>
+        </referenceContainer>
+    </body>
+</page>

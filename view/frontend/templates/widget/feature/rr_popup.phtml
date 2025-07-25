@@ -1,0 +1,41 @@
+<?php
+    /** @var \Magento\Framework\View\Element\Template $block */
+    /** @var \JaroslawZielinski\FeaturePoll\ViewModel\RulesAndRegulations $viewModel */
+    $viewModel = $block->getViewModel();
+    $title = (string)__('Rules and Regulations');
+    $htmlId = 'rr_popup';
+?>
+
+<div class="vote-modal-wrapper">
+    <div id="<?= $htmlId; ?>">
+        <div class="body ">
+            <div id="<?= $block->getHtmlId(); ?>" class="container">
+                <?= $viewModel->getRulesAndRegulations(); ?>
+            </div>
+        </div>
+    </div>
+    <script>
+        require([
+            'jquery',
+            'mage/translate',
+            'Magento_Ui/js/modal/modal',
+        ],
+        function ($, $t, modal) {
+            var options = {
+                'type': 'popup',
+                'title': '<?= $title; ?>',
+                'trigger': '[data-trigger=rules-and-regulations]',
+                'responsive': true,
+                'modalClass': 'rules-and-regulations-popup',
+                'buttons': [{
+                    text: $t('Ok')
+                }],
+                opened: function() {
+                    // Called when modal opens
+                    $('#mobile-trigger').hide();
+                }
+            };
+            const popup = modal(options, $('#<?= $htmlId; ?>'));
+        });
+    </script>
+</div>

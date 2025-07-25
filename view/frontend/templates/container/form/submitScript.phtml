@@ -1,0 +1,130 @@
+<?php
+    /** @var \JaroslawZielinski\OTPComponent\Block\Container\Form\SubmitScript $block */
+    $formId = $block->getFormId();
+    $recaptchaBlock = $block->getRecaptchaBlock();
+    /** @var \JaroslawZielinski\OTPComponent\Block\Container\Form $parentBlock */
+    $parentBlock = $block->getParentBlock();
+    /** @var \JaroslawZielinski\OTPComponent\Block\Container\Form\ReCaptcha $recaptchaHtmlBlock */
+    $recaptchaHtmlBlock = $parentBlock->getChildBlock($recaptchaBlock);
+    $submitUrl = $parentBlock->getSubmitUrl();
+    $statusOK = \JaroslawZielinski\OTPComponent\Controller\Form\Otp::STATUS_OK;
+    /** @var \JaroslawZielinski\FeaturePoll\ViewModel\Content $viewModel */
+    $viewModel = $block->getViewModel();
+?>
+<script type="text/javascript">
+    require([
+        'jquery',
+        'mage/translate',
+        'underscore',
+        'otpForms',
+        'otpFormsUtils',
+	    'yireoGoogleTagManagerPush',
+        'prototype',
+        'mage/validation'
+    ], function ($, $t, _, otpForms, otpFormsUtils, pusher) {
+        $(document).ready(function() {
+            $('#<?= $formId; ?>').on('submit', function (event) {
+                event.preventDefault();
+                event.stopPropagation();
+                const form = document.forms.namedItem('<?= $formId; ?>');
+                $(form).validation();
+                const featurePollId = '<?= $parentBlock->getData('featurepoll_id'); ?>';
+                const featurePollValue = '<?= $parentBlock->getData('featurepoll_value') ?? ''; ?>';
+                const splits = featurePollId.replaceAll('featurepoll-', '').split('-');
+                const pollId = splits[0], featureId = splits[1], questionId = splits[2];
+                const description = featuresJson[pollId][featureId][questionId] +
+                    ('' !== featurePollValue ? ' [' + featurePollValue + ']' : '');
+                let eventData = {};
+                let isValid = $(form).validation('isValid');
+                if (isValid) {
+                    otpForms.showLoader('<?= $formId; ?>');
+                    const oData = new FormData(form);
+                    // Initialize button state
+                    <?php if (!empty($viewModel->getGTMEventsName2())): ?>
+                    const otpValue = oData.get('otp6_value');
+                    //Fire second event
+                    eventData = {
+                        'event': '<?= $viewModel->getGTMEventsName2(); ?>',
+                        'ecommerce': {
+                            'featurepoll_id': featurePollId,
+                            'featurepoll_value': featurePollValue,
+                            'description': description,
+                            'otp': otpValue
+                        }
+                    };
+                    pusher(eventData, 'push name1 event (user clicks vote button) [featurepoll_id, featurepoll_value, description]');
+                    <?php endif; ?>
+                    const oReq = new XMLHttpRequest();
+                    oReq.open('POST', '<?= $submitUrl; ?>', true);
+                    oReq.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+                    oReq.onload = function(oEvent) {
+                        const STATUS_OK = '<?= $statusOK; ?>';
+                        var response = JSON.parse(oReq.response);
+                        var messageText = response.message;
+                        var resultText = response.results;
+                        var resultsArray = response.results2;
+                        var eCommerce = response.ecommerce;
+                        var status = response.status;
+                        if (STATUS_OK === status && 200 === oReq.status) {
+                            $('#parent-<?= $formId; ?>').html(resultText);
+                            for (const key in resultsArray) {
+                                const value = resultsArray[key];
+                                $('#results-' + key).html(value);
+                            }
+                            <?php if (!empty($viewModel->getGTMEventsName3())): ?>
+                            //Fire third event
+                            eventData = {
+                                'event': '<?= $viewModel->getGTMEventsName3(); ?>',
+                                'ecommerce': {
+                                    'name': eCommerce.name,
+                                    'surname': eCommerce.surname,
+                                    'token': eCommerce.token,
+                                    'featurepoll_id': featurePollId,
+                                    'featurepoll_value': featurePollValue,
+                                    'description': description
+                                }
+                            };
+                            pusher(eventData, 'push name1 event (user clicks vote button) [featurepoll_id, featurepoll_value, description]');
+                            <?php endif; ?>
+                        }
+                        const messageTemplate = STATUS_OK === status
+                            ? '<div class="alert alert-success" role="alert"><%= message %></div>'
+                            : '<div class="alert alert-danger" role="alert"><%= message %></div>';
+                        const myMessage = _.template(messageTemplate)({message: messageText});
+                        $('#message-<?= $formId; ?>').hide();
+                        $('#message-<?= $formId; ?>').html(myMessage);
+                        otpForms.hideLoader('<?= $formId; ?>');
+                        $('#message-<?= $formId; ?>').show();
+                        if (!(STATUS_OK === status && 200 === oReq.status)) {
+                            <?php if (!empty($viewModel->getGTMEventsName4())): ?>
+                            //Fire fourth event
+                            eventData = {
+                                'event': '<?= $viewModel->getGTMEventsName4(); ?>',
+                                'ecommerce': {
+                                    'name': oData.get('name'),
+                                    'surname': oData.get('surname'),
+                                    'token': btoa(oData.get('email')),
+                                    'featurepoll_id': featurePollId,
+                                    'featurepoll_value': featurePollValue,
+                                    'description': description,
+                                    'reasonFailed': messageText
+                                }
+                            };
+                            pusher(eventData, 'push name1 event (user clicks vote button) [featurepoll_id, featurepoll_value, description]');
+                            <?php endif; ?>
+                            otpForms.hideLoader('<?= $formId; ?>');
+                            <?php if (!empty($recaptchaHtmlBlock)): ?>
+                            <?= $recaptchaHtmlBlock->jsFailedReset($formId); ?>
+                            <?php endif; ?>
+                        }
+                    };
+                    oReq.send(oData);
+                } else {
+                    <?php if (!empty($recaptchaHtmlBlock)): ?>
+                    <?= $recaptchaHtmlBlock->jsFailedReset($formId); ?>
+                    <?php endif; ?>
+                }
+            });
+        });
+    });
+</script>

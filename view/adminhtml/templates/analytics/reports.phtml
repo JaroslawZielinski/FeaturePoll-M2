@@ -1,0 +1,31 @@
+<?php
+/** @var \JaroslawZielinski\FeaturePoll\Block\Adminhtml\Analytics\Reports $block */
+$pollResults = $block->getPollResults();
+$keys = $block->getSortedKeys();
+?>
+<?php if (!empty($keys)): ?>
+    <h2><?= __('FeaturePoll Value:'); ?></h2>
+    <?php foreach ($keys as $i => $key): ?>
+        <?php
+        list ($pollId, $featureId, $questionId) = \JaroslawZielinski\FeaturePoll\Helper\Data::explodeFeaturePollId($key);
+        $descriptions = $block->getDescriptions($pollId);
+        $description = $descriptions[$pollId][$featureId][$questionId];
+        $details = $pollResults[$key]['details'];
+        ?>
+        <?php if (!empty($details)): ?>
+            <div style="margin-bottom:10px;">
+                <strong style="margin-right: 10px;"><?= $key; ?></strong>
+                <?= $description; ?> (<strong><?= $pollResults[$key]['value']; ?></strong>)
+            </div>
+            <?= $block
+                ->getChildBlock('analytics.reports.grid')
+                ->setFormHtmlId('voteresults-' . $key)
+                ->setFeaturepollId($key)
+                ->toHtml();
+            ?>
+            <br />
+            <br />
+        <?php endif;?>
+    <?php endforeach; ?>
+<?php endif; ?>
+<br/>

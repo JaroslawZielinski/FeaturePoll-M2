@@ -1,0 +1,63 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <!-- SubmitScript -->
+    <virtualType name="JaroslawZielinski\FeaturePoll\Block\Container\Form\SubmitScript"
+        type="JaroslawZielinski\OTPComponent\Block\Container\Form\SubmitScript">
+        <arguments>
+            <argument name="templatePath" xsi:type="string">JaroslawZielinski_FeaturePoll::container/form/submitScript.phtml</argument>
+
+            <argument name="data" xsi:type="array">
+                <item name="view_model" xsi:type="object">JaroslawZielinski\FeaturePoll\ViewModel\Content</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- ExtraFields -->
+    <virtualType name="JaroslawZielinski\FeaturePoll\Block\Container\Form\ExtraFields"
+        type="JaroslawZielinski\OTPComponent\Block\Container\Form\Fields">
+        <arguments>
+            <argument name="templatePath" xsi:type="string">JaroslawZielinski_FeaturePoll::container/form/extraFields.phtml</argument>
+        </arguments>
+    </virtualType>
+
+    <!-- FormFactory -->
+    <type name="JaroslawZielinski\FeaturePoll\Model\MyFormFactory">
+        <arguments>
+            <argument name="submitScript" xsi:type="object">JaroslawZielinski\FeaturePoll\Block\Container\Form\SubmitScript</argument>
+
+            <argument name="extraFields" xsi:type="object">JaroslawZielinski\FeaturePoll\Block\Container\Form\ExtraFields</argument>
+        </arguments>
+
+        <plugin name="featurepoll-extra-fields-otp-form-plugin"
+            type="JaroslawZielinski\FeaturePoll\Plugin\Model\FormFactoryPlugin" sortOrder="20" disabled="false" />
+    </type>
+
+    <type name="JaroslawZielinski\FeaturePoll\Controller\Voting\Otp\Preprocess">
+        <arguments>
+            <argument name="formFactory" xsi:type="object">JaroslawZielinski\FeaturePoll\Model\MyFormFactory</argument>
+        </arguments>
+    </type>
+
+    <type name="JaroslawZielinski\FeaturePoll\Controller\Voting\Otp\Process">
+        <arguments>
+            <argument name="formFactory" xsi:type="object">JaroslawZielinski\FeaturePoll\Model\MyFormFactory</argument>
+        </arguments>
+    </type>
+
+    <virtualType name="JaroslawZielinski\FeaturePoll\Block\Container\Form\HiddenExtraFields"
+        type="JaroslawZielinski\OTPComponent\Block\Container\Form\Fields">
+        <arguments>
+            <argument name="data" xsi:type="array">
+                <item name="fields" xsi:type="array">
+                    <item name="rr" xsi:type="string">rr</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="JaroslawZielinski\FeaturePoll\Plugin\Model\FormFactoryPlugin">
+        <arguments>
+            <argument name="hiddenExtraFields" xsi:type="object">JaroslawZielinski\FeaturePoll\Block\Container\Form\HiddenExtraFields</argument>
+        </arguments>
+    </type>
+</config>

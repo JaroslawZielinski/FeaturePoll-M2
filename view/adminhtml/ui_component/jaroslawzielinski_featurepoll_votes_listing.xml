@@ -1,0 +1,376 @@
+<?xml version="1.0" ?>
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">
+                jaroslawzielinski_featurepoll_votes_listing.jaroslawzielinski_featurepoll_votes_listing_data_source
+            </item>
+        </item>
+    </argument>
+
+    <settings>
+        <spinner>jaroslawzielinski_featurepoll_votes_columns</spinner>
+
+        <deps>
+            <dep>jaroslawzielinski_featurepoll_votes_listing.jaroslawzielinski_featurepoll_votes_listing_data_source</dep>
+        </deps>
+
+        <buttons />
+    </settings>
+
+    <dataSource component="Magento_Ui/js/grid/provider" name="jaroslawzielinski_featurepoll_votes_listing_data_source">
+        <settings>
+            <updateUrl path="mui/index/render"/>
+
+            <!-- @see https://magento.stackexchange.com/questions/281778/same-row-content-repeat-in-the-whole-page-grid-while-navigate-pagination#answer-349891 -->
+            <storageConfig>
+                <param name="indexField" xsi:type="string">vote_id</param>
+            </storageConfig>
+        </settings>
+
+        <aclResource>JaroslawZielinski_FeaturePoll::votes</aclResource>
+
+        <dataProvider class="JaroslawZielinski\FeaturePoll\Ui\DataProvider\Vote\ListingDataProvider"
+            name="jaroslawzielinski_featurepoll_votes_listing_data_source">
+            <settings>
+                <requestFieldName>vote_id</requestFieldName>
+
+                <primaryFieldName>vote_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+
+    <listingToolbar name="listing_top">
+        <settings>
+            <sticky>true</sticky>
+        </settings>
+
+        <bookmark name="bookmarks"/>
+
+        <columnsControls name="columns_controls"/>
+
+        <massaction name="listing_massaction">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="selectProvider" xsi:type="string">jaroslawzielinski_featurepoll_votes_listing.jaroslawzielinski_featurepoll_votes_listing.jaroslawzielinski_featurepoll_votes_columns.ids</item>
+
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/tree-massactions</item>
+
+                    <item name="indexField" xsi:type="string">id</item>
+                </item>
+            </argument>
+
+            <action name="markFraud">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="type" xsi:type="string">fraud</item>
+
+                        <item name="label" xsi:type="string" translate="true">Mark Fraud</item>
+
+                        <item name="url" xsi:type="url" path="jaroslawzielinski_featurepoll/votes/massfraud" />
+
+                        <item name="confirm" xsi:type="array">
+                            <item name="title" xsi:type="string" translate="true">Mark votes as fraud</item>
+
+                            <item name="message" xsi:type="string" translate="true">Are you sure you want to mark selected votes as fraud?</item>
+                        </item>
+                    </item>
+                </argument>
+            </action>
+
+            <action name="markNotFraud">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="type" xsi:type="string">notfraud</item>
+
+                        <item name="label" xsi:type="string" translate="true">Mark Not Fraud</item>
+
+                        <item name="url" xsi:type="url" path="jaroslawzielinski_featurepoll/votes/massnotfraud" />
+
+                        <item name="confirm" xsi:type="array">
+                            <item name="title" xsi:type="string" translate="true">Mark votes as not fraud</item>
+
+                            <item name="message" xsi:type="string" translate="true">Are you sure you want to mark selected votes as not fraud?</item>
+                        </item>
+                    </item>
+                </argument>
+            </action>
+
+            <action name="addToChart">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="type" xsi:type="string">addToChart</item>
+
+                        <item name="label" xsi:type="string" translate="true">Add To Chart</item>
+
+                        <item name="url" xsi:type="url" path="jaroslawzielinski_featurepoll/votes/addtochart" />
+
+                        <item name="confirm" xsi:type="array">
+                            <item name="title" xsi:type="string" translate="true">Add votes to chart</item>
+
+                            <item name="message" xsi:type="string" translate="true">Are you sure you want to add selected votes to the chart?</item>
+                        </item>
+                    </item>
+                </argument>
+            </action>
+        </massaction>
+
+        <filterSearch name="fulltext"/>
+
+        <filters name="listing_filters">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="templates" xsi:type="array">
+                        <item name="filters" xsi:type="array">
+                            <item name="select" xsi:type="array">
+                                <item name="component" xsi:type="string">Magento_Ui/js/form/element/ui-select</item>
+
+                                <item name="template" xsi:type="string">ui/grid/filters/elements/ui-select</item>
+                            </item>
+                        </item>
+                    </item>
+                </item>
+            </argument>
+        </filters>
+
+        <paging name="listing_paging"/>
+    </listingToolbar>
+
+    <columns name="jaroslawzielinski_featurepoll_votes_columns">
+        <settings>
+            <editorConfig>
+                <param name="selectProvider" xsi:type="string">
+                    jaroslawzielinski_featurepoll_votes_listing.jaroslawzielinski_featurepoll_votes_listing.jaroslawzielinski_featurepoll_votes_columns.ids
+                </param>
+
+                <param name="enabled" xsi:type="boolean">false</param>
+
+                <param name="indexField" xsi:type="string">id</param>
+
+                <param name="clientConfig" xsi:type="array">
+                    <item name="saveUrl" path="jaroslawzielinski/featurepoll/inlineEdit" xsi:type="url"/>
+
+                    <item name="validateBeforeSave" xsi:type="boolean">false</item>
+                </param>
+            </editorConfig>
+
+            <childDefaults>
+                <param name="fieldAction" xsi:type="array">
+                    <item name="provider" xsi:type="string">
+                        jaroslawzielinski_featurepoll_votes_listing.jaroslawzielinski_featurepoll_votes_listing.jaroslawzielinski_featurepoll_votes_columns_editor
+                    </item>
+
+                    <item name="target" xsi:type="string">startEdit</item>
+
+                    <item name="params" xsi:type="array">
+                        <item name="0" xsi:type="string">${ $.$data.rowIndex }</item>
+
+                        <item name="1" xsi:type="boolean">true</item>
+                    </item>
+                </param>
+            </childDefaults>
+        </settings>
+
+        <selectionsColumn name="ids">
+            <settings>
+                <indexField>vote_id</indexField>
+            </settings>
+        </selectionsColumn>
+
+        <column name="vote_id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="bodyTmpl" xsi:type="string">ui/grid/cells/text</item>
+
+                    <item name="label" xsi:type="string" translate="true">ID</item>
+
+                    <item name="sorting" xsi:type="string">asc</item>
+
+                    <item name="sortable" xsi:type="boolean">true</item>
+
+                    <item name="visible" xsi:type="boolean">true</item>
+
+                    <item name="sortOrder" xsi:type="number">10</item>
+                </item>
+            </argument>
+        </column>
+
+        <column name="voter_id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+
+                    <item name="bodyTmpl" xsi:type="string">ui/grid/cells/text</item>
+
+                    <item name="label" xsi:type="string" translate="true">Voter ID</item>
+
+                    <item name="sortable" xsi:type="boolean">true</item>
+
+                    <item name="visible" xsi:type="boolean">true</item>
+
+                    <item name="sortOrder" xsi:type="number">20</item>
+                </item>
+            </argument>
+        </column>
+
+        <column name="voter_ip">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+
+                    <item name="bodyTmpl" xsi:type="string">ui/grid/cells/text</item>
+
+                    <item name="label" xsi:type="string" translate="true">Voter IP</item>
+
+                    <item name="sortable" xsi:type="boolean">true</item>
+
+                    <item name="visible" xsi:type="boolean">true</item>
+
+                    <item name="sortOrder" xsi:type="number">30</item>
+                </item>
+            </argument>
+        </column>
+
+        <column name="voter_details" class="JaroslawZielinski\FeaturePoll\Ui\Component\Listing\Column\Votes\VoterDetails">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="bodyTmpl" xsi:type="string">ui/grid/cells/html</item>
+
+                    <item name="label" xsi:type="string" translate="true">Voter Details</item>
+
+                    <item name="sortable" xsi:type="boolean">true</item>
+
+                    <item name="visible" xsi:type="boolean">true</item>
+
+                    <item name="sortOrder" xsi:type="number">40</item>
+
+                    <!-- @see https://community.magento.com/t5/Magento-2-x-Programming/Custom-link-in-order-grid-not-able-to-access-custom-controller/m-p/491331/highlight/true#M13929 -->
+                    <item name="fieldAction" xsi:type="boolean">false</item>
+                </item>
+            </argument>
+        </column>
+
+        <column name="poll_id" component="Magento_Ui/js/grid/columns/select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">50</item>
+                </item>
+            </argument>
+
+            <settings>
+                <filter>select</filter>
+
+                <options class="JaroslawZielinski\FeaturePoll\Model\Config\Source\Polls\Polls"/>
+
+                <dataType>select</dataType>
+
+                <label translate="true">Poll</label>
+            </settings>
+        </column>
+
+        <column name="feature_id" component="Magento_Ui/js/grid/columns/select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">60</item>
+                </item>
+            </argument>
+
+            <settings>
+                <filter>select</filter>
+
+                <options class="JaroslawZielinski\FeaturePoll\Model\Config\Source\Polls\Features"/>
+
+                <dataType>select</dataType>
+
+                <label translate="true">Feature</label>
+            </settings>
+        </column>
+
+        <column name="question_id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+
+                    <item name="bodyTmpl" xsi:type="string">ui/grid/cells/text</item>
+
+                    <item name="label" xsi:type="string" translate="true">Question</item>
+
+                    <item name="sortable" xsi:type="boolean">true</item>
+
+                    <item name="visible" xsi:type="boolean">true</item>
+
+                    <item name="sortOrder" xsi:type="number">70</item>
+                </item>
+            </argument>
+        </column>
+
+        <column name="details">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+
+                    <item name="bodyTmpl" xsi:type="string">ui/grid/cells/text</item>
+
+                    <item name="label" xsi:type="string" translate="true">Details</item>
+
+                    <item name="sortable" xsi:type="boolean">true</item>
+
+                    <item name="visible" xsi:type="boolean">true</item>
+
+                    <item name="sortOrder" xsi:type="number">80</item>
+                </item>
+            </argument>
+        </column>
+
+        <column name="is_fraud" class="JaroslawZielinski\FeaturePoll\Ui\Component\Listing\Column\Votes\IsFraud">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="bodyTmpl" xsi:type="string">ui/grid/cells/html</item>
+
+                    <item name="label" xsi:type="string" translate="true">Is Fraud</item>
+
+                    <item name="sortable" xsi:type="boolean">true</item>
+
+                    <item name="visible" xsi:type="boolean">true</item>
+
+                    <item name="sortOrder" xsi:type="number">90</item>
+                </item>
+            </argument>
+
+            <settings>
+                <filter>select</filter>
+
+                <options class="JaroslawZielinski\FeaturePoll\Model\Config\Source\Features\IsFraud"/>
+
+                <dataType>select</dataType>
+            </settings>
+        </column>
+
+        <column name="created_at" class="JaroslawZielinski\FeaturePoll\Ui\Component\Listing\Column\Votes\Date">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">dateRange</item>
+
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/date</item>
+
+                    <item name="dataType" xsi:type="string">date</item>
+
+                    <item name="label" xsi:type="string" translate="true">Created At</item>
+
+                    <item name="sorting" xsi:type="string">desc</item>
+
+                    <item name="sortable" xsi:type="boolean">true</item>
+
+                    <item name="dateFormat" xsi:type="string" translate="true">MMM d, YYYY h:mm:ss A</item>
+
+                    <item name="filterDate" xsi:type="string" translate="true">MMM d, yy</item>
+
+                    <item name="visible" xsi:type="boolean">true</item>
+
+                    <item name="sortOrder" xsi:type="number">100</item>
+                </item>
+            </argument>
+        </column>
+    </columns>
+</listing>

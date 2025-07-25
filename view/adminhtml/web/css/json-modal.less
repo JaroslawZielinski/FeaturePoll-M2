@@ -1,0 +1,157 @@
+//
+//  JSON Modal Component
+//  _____________________________________________
+@json-modal-overlay-bg: rgba(0, 0, 0, 0.5);
+@json-modal-bg: #ffffff;
+@json-modal-border-radius: 8px;
+@json-modal-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+@json-modal-padding: 20px;
+
+@json-btn-primary-bg: #007bdb;
+@json-btn-success-bg: #28a745;
+@json-btn-default-bg: #f1f1f1;
+@json-btn-text-color: #ffffff;
+@json-btn-padding: 8px 15px;
+@json-btn-border-radius: 4px;
+
+@json-display-bg: #f8f8f8;
+@json-display-border: 1px solid #ddd;
+@json-display-font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+@json-display-font-size: 12px;
+@json-display-line-height: 1.4;
+
+.json-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: @json-modal-overlay-bg;
+    z-index: 9999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    .json-modal-container {
+        background: @json-modal-bg;
+        padding: @json-modal-padding;
+        border-radius: @json-modal-border-radius;
+        max-width: 80%;
+        max-height: 80%;
+        overflow: auto;
+        box-shadow: @json-modal-shadow;
+        min-width: 500px;
+        .json-modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            border-bottom: 1px solid #eee;
+            padding-bottom: 10px;
+            .json-modal-title {
+                margin: 0;
+                color: #333;
+                font-size: 18px;
+                font-weight: 600;
+            }
+            .json-modal-close {
+                background: @json-btn-default-bg;
+                border: none;
+                padding: 5px 10px;
+                cursor: pointer;
+                border-radius: @json-btn-border-radius;
+                font-size: 18px;
+                font-weight: bold;
+                color: #666;
+                transition: background-color 0.2s ease;
+                &:hover {
+                    background-color: #e0e0e0;
+                }
+            }
+        }
+        .json-modal-actions {
+            margin-bottom: 15px;
+            .json-btn {
+                border: none;
+                padding: @json-btn-padding;
+                margin-right: 10px;
+                cursor: pointer;
+                border-radius: @json-btn-border-radius;
+                font-size: 14px;
+                font-weight: 500;
+                transition: background-color 0.2s ease;
+                &.json-btn-primary {
+                    background: @json-btn-primary-bg;
+                    color: @json-btn-text-color;
+                    &:hover {
+                        background-color: darken(@json-btn-primary-bg, 10%);
+                    }
+                }
+                &.json-btn-success {
+                    background: @json-btn-success-bg;
+                    color: @json-btn-text-color;
+                    &:hover {
+                        background-color: darken(@json-btn-success-bg, 10%);
+                    }
+                }
+            }
+        }
+        .json-display {
+            background-color: @json-display-bg;
+            border: @json-display-border;
+            border-radius: @json-btn-border-radius;
+            padding: 15px;
+            font-family: @json-display-font-family;
+            font-size: @json-display-font-size;
+            line-height: @json-display-line-height;
+            max-height: 400px;
+            overflow: auto;
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            color: #333;
+        }
+    }
+}
+
+// Grid column styles
+.json-truncated {
+    font-family: @json-display-font-family;
+    background-color: #f5f5f5;
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-size: 11px;
+}
+
+.json-view-full {
+    color: @json-btn-primary-bg !important;
+    text-decoration: none;
+    font-weight: 500;
+    &:hover {
+        text-decoration: underline;
+        color: darken(@json-btn-primary-bg, 10%) !important;
+    }
+}
+
+// Responsive design
+@media (max-width: 768px) {
+    .json-modal-overlay {
+        .json-modal-container {
+            max-width: 95%;
+            max-height: 90%;
+            min-width: auto;
+            padding: 15px;
+            .json-modal-actions {
+                .json-btn {
+                    display: block;
+                    width: 100%;
+                    margin-bottom: 10px;
+                    margin-right: 0;
+                }
+            }
+            .json-display {
+                font-size: 11px;
+                max-height: 300px;
+            }
+        }
+    }
+}

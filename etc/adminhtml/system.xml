@@ -106,13 +106,15 @@
                     <label>Polls Items</label>
 
                     <frontend_model>JaroslawZielinski\FeaturePoll\Block\Adminhtml\System\Config\Poll\Field\Items</frontend_model>
-                    <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+
+                    <backend_model>JaroslawZielinski\FeaturePoll\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
 
                     <comment><![CDATA[NOTE: <strong><i>Item</i></strong> is taken from <strong>Polls</strong> grid.
                     <strong><i>Route</i></strong> is a combination of <i>routeName_controllerName_actionName</i>.
                      You may use <strong>Store Teller</strong> to tell route on any page using module
                      <a href="https://github.com/JaroslawZielinski/Diagnostics-M2" target="_blank">Diagnostics</a>. See
-                     this <a href="https://github.com/JaroslawZielinski/Diagnostics-M2/blob/master/docs/please_tell_me_your_store.png" target="_blank">section</a>.]]></comment>
+                     this <a href="https://github.com/JaroslawZielinski/Diagnostics-M2/blob/master/docs/please_tell_me_your_store.png" target="_blank">section</a>.
+                     In order to define your custom route you must implement <i>etc/frontend/page_types.xml</i> (see more <a href="https://developer.adobe.com/commerce/php/development/components/routing/#declaring-the-new-route-as-page-type" target="_blank">here</a>.)]]></comment>
                 </field>
 
                 <depends>

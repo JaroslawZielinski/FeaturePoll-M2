@@ -1,10 +1,10 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
     <event name="featurepoll_controller_validation">
-        <observer name="frontend_mysurvey_validator" instance="JaroslawZielinski\FeaturePoll\Observer\Validation"/>
+        <observer name="frontend_featurepoll_validator" instance="JaroslawZielinski\FeaturePoll\Observer\Validation"/>
     </event>
 
     <event name="featurepoll_controller_authenticated">
-        <observer name="frontend_mysurvey_action_hook" instance="JaroslawZielinski\FeaturePoll\Observer\Action"/>
+        <observer name="frontend_featurepoll_action_hook" instance="JaroslawZielinski\FeaturePoll\Observer\Action"/>
     </event>
 </config>

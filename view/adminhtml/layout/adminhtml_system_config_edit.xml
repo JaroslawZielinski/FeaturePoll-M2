@@ -4,6 +4,10 @@
     <head>
         <css src="jquery/colorpicker/css/colorpicker.css"/>
 
+        <css src="JaroslawZielinski_FeaturePoll::css/chosen/chosen.css"/>
+
         <css src="JaroslawZielinski_FeaturePoll::css/draggable.css"/>
+
+        <css src="JaroslawZielinski_FeaturePoll::css/system-config.css"/>
     </head>
 </page>

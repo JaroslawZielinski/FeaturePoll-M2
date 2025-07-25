@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace JaroslawZielinski\FeaturePoll\Controller\Adminhtml\Features;
 
-use JaroslawZielinski\MySurvey\Controller\Adminhtml\Grid;
+use JaroslawZielinski\FeaturePoll\Controller\Adminhtml\Grid;
 
 class Index extends Grid
 {

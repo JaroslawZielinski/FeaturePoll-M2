@@ -6,7 +6,7 @@
     $tabs = $featurePoll['features'];
     $title = sprintf('%s - %s', $featurePoll['groupName'], $featurePoll['description']);
     $parentBlock = $block->getParentBlock();
-    /** @var \JaroslawZielinski\MySurvey\ViewModel\Content $viewModel */
+    /** @var \JaroslawZielinski\FeaturePoll\ViewModel\Content $viewModel */
     $viewModel = $parentBlock->getViewModel();
     $featuresJson = $viewModel->getFeaturesJson($featurePoll);
     // @see https://www.w3schools.com/w3css/w3css_tabulators.asp

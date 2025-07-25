@@ -11,10 +11,11 @@
             list ($pollId, $featureId, $questionId) = \JaroslawZielinski\FeaturePoll\Helper\Data::explodeFeaturePollId($key);
             $descriptions = $block->getDescriptions($pollId);
             $description = $descriptions[$pollId][$featureId][$questionId];
+            list ($value, $total) = $block->getResults($pollId, $featureId, $questionId);
         ?>
         <tr>
             <td><strong style="margin-right: 10px"><?= $key; ?></strong></td>
-            <td><?= $description; ?> (<strong><?= $pollResults[$key]['value']; ?></strong>)</td>
+            <td><?= $description; ?> (<strong><?= \JaroslawZielinski\FeaturePoll\Helper\Data::getResults($value, $total); ?></strong>)</td>
         </tr>
     <?php endforeach; ?>
     </table>

@@ -157,9 +157,9 @@ class Content implements ArgumentInterface
         return $featuresArray;
     }
 
-    public function getFeaturesJson(array $mySurvey): string
+    public function getFeaturesJson(array $featurePoll): string
     {
-        $featuresArray = $this->getFeaturesArray($mySurvey);
+        $featuresArray = $this->getFeaturesArray($featurePoll);
         return $this->jsonSerializer->serialize($featuresArray);
     }
 

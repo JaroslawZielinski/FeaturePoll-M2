@@ -6,6 +6,7 @@ namespace JaroslawZielinski\FeaturePoll\Block\Adminhtml\Analytics;
 
 use JaroslawZielinski\FeaturePoll\Model\Vote\VoteResultsBarChartDataBuilder;
 use JaroslawZielinski\FeaturePoll\ViewModel\Content as ContentView;
+use JaroslawZielinski\FeaturePoll\Helper\Data;
 use Magento\Backend\Block\Template;
 use Magento\Backend\Block\Template\Context;
 use Magento\Directory\Helper\Data as DirectoryHelper;
@@ -50,6 +51,11 @@ class Legend extends Template
     public function getDescriptions(string $surveyId): array
     {
         return $this->contentView->getFeaturePollArray($surveyId);
+    }
+
+    public function getResults(int $pollId, int $featureId, int $questionId): array
+    {
+        return $this->contentView->getResults($pollId, $featureId, $questionId);
     }
 
     /**

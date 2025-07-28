@@ -94,9 +94,9 @@ class Console
      * @throws LocalizedException
      */
     public function execute(
-        int      $pollId,
-        int      $voteCount,
-        bool     $ifClear = false,
+        int $pollId,
+        int $voteCount,
+        bool $ifClear = false,
         callable $start = null,
         callable $iteration = null,
         callable $end = null
@@ -119,8 +119,8 @@ class Console
             }
         }
         $customerCollection = $this->customerCollectionFactory->create();
-        $mySurveyArray = $this->contentView->getFeaturePoll((string)$pollId);
-        $maxVotes = count($mySurveyArray['features']);
+        $featurePollArray = $this->contentView->getFeaturePoll((string)$pollId);
+        $maxVotes = count($featurePollArray['features']);
         $customers = $customerCollection->getAllIds();
         $customerIds = [];
         foreach ($customers as $customerId) {
@@ -128,7 +128,7 @@ class Console
                 $customerIds[] = $customerId;
             }
         }
-        $chessBoard = $mySurveyArray['features'];
+        $chessBoard = $featurePollArray['features'];
         $chessBoardPawn = 0;
         for ($i = 0; $i < $voteCount; $i++) {
             if ($i < count($customerIds)) {

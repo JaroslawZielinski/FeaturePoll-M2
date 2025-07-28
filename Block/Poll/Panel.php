@@ -63,7 +63,7 @@ class Panel extends Template
             $this->request->getActionName()
         );
         $pollItems = $this->config->getPanePollsItems();
-        $key = Data::assocArrayKeySearch($route, $pollItems);
+        $key = Data::assocArrayKeySearch($route, $pollItems, 'routes');
         if (!empty($key)) {
             $pollId = $pollItems[$key]['item'];
             //use viewModel

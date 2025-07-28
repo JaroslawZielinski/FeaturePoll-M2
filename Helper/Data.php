@@ -10,11 +10,12 @@ use Magento\Framework\Phrase;
 
 class Data extends AbstractHelper
 {
-    public static function assocArrayKeySearch(string $search, array $array): ?string
+    public static function assocArrayKeySearch(string $needle, array $array, string $subPath = null): ?string
     {
         $found = null;
-        array_walk($array, function ($k, $v) use ($search, &$found) {
-            if (in_array($search, $k)) {
+        array_walk($array, function ($k, $v) use ($needle, $subPath, &$found) {
+            $hay = !empty($subPath) ? $k[$subPath] ?? $k : $k;
+            if (in_array($needle, $hay)) {
                 $found = $v;
             }
         });
@@ -162,5 +163,11 @@ class Data extends AbstractHelper
         return $value > 0
             ? (float)number_format((100 * $value) / $total, 2, '.', '')
             : 0.0;
+    }
+
+    public static function getResults(int $value, int $total): string
+    {
+        $progressPercents = self::getProgressPercents((int)$value, (int)$total);
+        return sprintf('%s&#37; [%s/%s]', (int)$progressPercents, $value, $total);
     }
 }

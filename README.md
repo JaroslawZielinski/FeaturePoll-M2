@@ -100,6 +100,7 @@ composer require jaroslawzielinski/featurepoll-m2
 ### 1. Create Your First Feature Poll
 - Navigate to **Admin Panel Menu > FEATUREPOLL > Grids > Features**
 - Click **"Add New Feature"**
+- You may use drag and drop to change order of the elements
 - Configure your feature options and questions
 - Hit Save Feature button
 
@@ -109,6 +110,8 @@ composer require jaroslawzielinski/featurepoll-m2
 - Navigate to **Admin Panel Menu > FEATUREPOLL > Grids > Polls**
 - Click **"Add New Poll"**
 - Configure your Poll -> Feature association (you may change order)
+- Configure visibility and participation options (**Date From** and **Date To**)
+- You may use drag and drop to change order of the elements
 - Hit Save Poll button
 
 ![Poll Creation](docs/newpoll2.png)
@@ -116,8 +119,17 @@ composer require jaroslawzielinski/featurepoll-m2
 
 ### 2. Configure Community Engagement
 - Choose target pages for poll display
-- Select which polls to show to different user segments
-- Configure visibility and participation options
+
+![Poll Creation](docs/config1.png)
+*[📸 Screenshot: Item - Next Monthly Special Dish]*
+
+![Poll Creation](docs/config2.png)
+*[📸 Screenshot: Choose on CMS Home Page and on Catalog Category]*
+
+**NOTE**: _Backend Validation: The routes can not intersect with other rows (you may not show 2 polls on the same page)_ 
+
+![Poll Creation](docs/config3.png)
+*[📸 Screenshot: GTM Events for: **vote_click**, **vote_otp**, **voted**, **vote_failed**]*
 
 ### 3. Launch & Feel the Pulse
 - Deploy your polls to gather community feedback

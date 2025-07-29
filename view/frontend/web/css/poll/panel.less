@@ -476,6 +476,10 @@
 
     .results-container {
         color: #ffffff;
+        &.empty {
+            display: none;
+        }
+        &.result-progress-0 { background-color: hsl(0, 75%, 55%); }
         &.result-progress-1 { background-color: hsl(0, 75%, 55%); }
         &.result-progress-2 { background-color: hsl(2, 75%, 55%); }
         &.result-progress-3 { background-color: hsl(5, 75%, 55%); }

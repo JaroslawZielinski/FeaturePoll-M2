@@ -32,6 +32,8 @@
                         template="JaroslawZielinski_FeaturePoll::widget/feature/popup.phtml">
                         <arguments>
                             <argument name="html_id" xsi:type="string">body-container</argument>
+
+                            <argument name="view_model" xsi:type="object">JaroslawZielinski\FeaturePoll\ViewModel\Content</argument>
                         </arguments>
                     </block>
 

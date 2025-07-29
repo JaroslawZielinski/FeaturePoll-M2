@@ -42,20 +42,20 @@
                     $mSProgressBlock = $block->getChildBlock('ms-progress');
                     $resultHtmlId = sprintf('results-%s', $featureHtmlId);
                 ?>
-                <?php if (!empty($mSProgressBlock) && $total > 0): ?>
-                    <?php
-                        $progressPercents = \JaroslawZielinski\FeaturePoll\Helper\Data::getProgressPercents((int)$value, (int)$total);
-                        $backgroundColorClass = \JaroslawZielinski\FeaturePoll\Helper\Data::getPercentageColorClass($progressPercents);
-                    ?>
-                    <div id="<?= $resultHtmlId; ?>" class="results-container <?= $backgroundColorClass; ?>">
+                <?php
+                    $progressPercents = \JaroslawZielinski\FeaturePoll\Helper\Data::getProgressPercents((int)$value, (int)$total);
+                    $backgroundColorClass = \JaroslawZielinski\FeaturePoll\Helper\Data::getPercentageColorClass($progressPercents);
+                    $isNotEmpty = !empty($mSProgressBlock) && $total > 0;
+                ?>
+                <div id="<?= $resultHtmlId; ?>" class="results-container <?= $isNotEmpty ? $backgroundColorClass : 'empty'; ?>">
+                    <?php if ($isNotEmpty): ?>
                         <?= $mSProgressBlock
                             ->setValue($value)
                             ->setTotal($total)
                             ->toHtml();
                         ?>
-                    </div>
-                <?php endif; ?>
-
+                    <?php endif; ?>
+                </div>
             </div>
         </div>
         <?php $i++; ?>
@@ -123,6 +123,10 @@
                         for (const key in resultsArray) {
                             const value = resultsArray[key];
                             $('#results-' + key).html(value);
+                            $('#results-' + key).removeClass('empty');
+                            const match = value.match(/<span>(\w+)&#37;/);
+                            const percentProgress = match ? match[1] : 0;
+                            $('#results-' + key).addClass('result-progress-' + percentProgress);
                         }
                         <?php if (!empty($viewModel->getGTMEventsName1())): ?>
                         //Fire first event

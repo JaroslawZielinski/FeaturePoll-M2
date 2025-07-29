@@ -52,7 +52,7 @@ class Edit extends Grid implements HttpGetActionInterface
             /** @var FormData $modelData */
             $modelData = $this->featureRepository->get($featureId);
             $model->setData($modelData->__toArray());
-            if (empty($modelData->getFormId())) {
+            if (empty($modelData->getFeatureId())) {
                 $this->messageManager->addErrorMessage(__('This feature no longer exists.'));
                 /** @var Redirect $resultRedirect */
                 $resultRedirect = $this->resultRedirectFactory->create();

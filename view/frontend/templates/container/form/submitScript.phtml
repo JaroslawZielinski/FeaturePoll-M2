@@ -70,6 +70,10 @@
                             for (const key in resultsArray) {
                                 const value = resultsArray[key];
                                 $('#results-' + key).html(value);
+                                $('#results-' + key).removeClass('empty');
+                                const match = value.match(/<span>(\w+)&#37;/);
+                                const percentProgress = match ? match[1] : 0;
+                                $('#results-' + key).addClass('result-progress-' + percentProgress);
                             }
                             <?php if (!empty($viewModel->getGTMEventsName3())): ?>
                             //Fire third event

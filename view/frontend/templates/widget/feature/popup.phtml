@@ -2,6 +2,9 @@
     /** @var \Magento\Framework\View\Element\Template $block */
     $title = (string)__('Vote for...');
     $htmlId = 'my-popup';
+    /** @var \JaroslawZielinski\FeaturePoll\ViewModel\Content $viewModel */
+    $viewModel = $block->getViewModel();
+    $paneHtmlId = $viewModel->getPaneHtmlId();
 ?>
 
 <div id="<?= $htmlId; ?>-wrapper" class="vote-modal-wrapper">
@@ -42,7 +45,7 @@
                         let formId = form.attr('id');
                         otpForms.resetFormById(formId);
                     }
-                    $('#mobile-trigger').show();
+                    $('#<?= $paneHtmlId; ?>').toggleClass('show');
                 }
             };
             const popup = modal(options, $('#<?= $htmlId; ?>-wrapper'));

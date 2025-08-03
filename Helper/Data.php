@@ -96,7 +96,7 @@ class Data extends AbstractHelper
     {
         list ($invert, $days, $hours, $minutes, $seconds) = self::getTimeDiff($date2, $date1);
         $sign = $invert <= 0 ? 1 : -1;
-        return $sign * $days;
+        return $sign * abs($days);
     }
 
     /**

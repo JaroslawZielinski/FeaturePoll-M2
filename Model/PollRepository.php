@@ -139,7 +139,7 @@ class PollRepository implements PollRepositoryInterface
         $poll = $this->pollFactory->create();
         $this->resource->load($poll, $pollId);
         if (!$poll->getId()) {
-            throw new NoSuchEntityException(__('Survey with id "%1" does not exist.', $pollId));
+            throw new NoSuchEntityException(__('Poll with id "%1" does not exist.', $pollId));
         }
         return $poll->getDataModel();
     }

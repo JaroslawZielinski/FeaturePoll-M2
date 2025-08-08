@@ -81,7 +81,7 @@ class VoteResultsBarChartDataBuilder extends BarChartDataBuilder
         $details = [];
         $emails = [];
         $chartLabels = [];
-        $surveyResults = [];
+        $pollResults = [];
         /** @var array $collectionIds */
         $collectionIds = $this->backendSession->getData(self::BARCHART_VOTES_COLECTION_TAG) ?? null;
         $this->backendSession->getData(self::BARCHART_VOTES_COLECTION_LEGEND_TAG, $clear = true);
@@ -112,7 +112,7 @@ class VoteResultsBarChartDataBuilder extends BarChartDataBuilder
             if (!empty($values)) {
                 $this->sortValues($values);
                 foreach ($values as $featurePollId => $value) {
-                    $surveyResults[$featurePollId] = [
+                    $pollResults[$featurePollId] = [
                         'questionName' => $labels[$featurePollId],
                         'value' => $value,
                         'featureName' => $features[$featurePollId],
@@ -120,8 +120,8 @@ class VoteResultsBarChartDataBuilder extends BarChartDataBuilder
                         'emails' => $emails[$featurePollId] ?? []
                     ];
                 }
-                $this->backendSession->setData(self::BARCHART_VOTES_COLECTION_LEGEND_TAG, $surveyResults);
-                $chartLabels = array_keys($surveyResults);
+                $this->backendSession->setData(self::BARCHART_VOTES_COLECTION_LEGEND_TAG, $pollResults);
+                $chartLabels = array_keys($pollResults);
             }
         }
         $this->setDataLabels($chartLabels)

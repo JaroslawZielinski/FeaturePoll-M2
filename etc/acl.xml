@@ -35,7 +35,7 @@
                     <resource id="Magento_Backend::stores_settings">
                         <resource id="Magento_Config::config">
                             <resource id="JaroslawZielinski_FeaturePoll::configuration"
-                                title="My Survery Configuration" translate="title" />
+                                title="Feature Poll Configuration" translate="title" />
                         </resource>
                     </resource>
                 </resource>

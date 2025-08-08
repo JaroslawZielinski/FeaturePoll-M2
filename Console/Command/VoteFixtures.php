@@ -81,13 +81,13 @@ class VoteFixtures extends Command
     protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->output = $output;
-        $surveyId = (int)$input->getArgument(self::VOTES_POLL_ID) ?? null;
+        $pollId = (int)$input->getArgument(self::VOTES_POLL_ID) ?? null;
         $voteCount = (int)$input->getArgument(self::VOTES_COUNT) ?? null;
         $ifClear = !!$input->getOption(self::VOTES_IF_CLEAR);
 
-        if ($surveyId > 0 && $voteCount > 0) {
+        if ($pollId > 0 && $voteCount > 0) {
             $this->voteFixturesConsole->execute(
-                $surveyId,
+                $pollId,
                 $voteCount,
                 $ifClear,
                 [$this, 'start'],

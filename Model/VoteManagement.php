@@ -224,7 +224,7 @@ class VoteManagement
                 ->create();
             $voteList = $this->voteRepository->getList($searchCriteria);
             $voteItems = $voteList->getItems();
-            // Fixing issue that user can not vote in other surveys...
+            // Fixing issue that user can not vote in other polls...
             $voteItems = array_filter($voteItems, function ($item) use ($pollId) {
                 $votePollId = (int)$item->getPollId();
                 return $pollId === $votePollId;

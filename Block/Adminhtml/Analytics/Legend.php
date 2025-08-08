@@ -48,9 +48,9 @@ class Legend extends Template
     /**
      * @throws LocalizedException
      */
-    public function getDescriptions(string $surveyId): array
+    public function getDescriptions(string $pollId): array
     {
-        return $this->contentView->getFeaturePollArray($surveyId);
+        return $this->contentView->getFeaturePollArray($pollId);
     }
 
     public function getResults(int $pollId, int $featureId, int $questionId): array

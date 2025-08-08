@@ -74,7 +74,7 @@
             <column name="voter_id"/>
         </constraint>
 
-        <constraint xsi:type="unique" referenceId="MY_SURVEY_VOTERS_TOKEN">
+        <constraint xsi:type="unique" referenceId="FEATURE_POLL_VOTERS_TOKEN">
             <column name="token"/>
         </constraint>
     </table>
